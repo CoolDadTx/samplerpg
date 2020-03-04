@@ -1,0 +1,17 @@
+<Project>	   	
+	<PropertyGroup>
+        <Product>Sample RPG</Product>
+        <Company>P3Net</Company>
+        <Authors>P3Net</Authors>
+        <Copyright>Copyright © Michael Taylor</Copyright>    
+		
+        <!-- Shared versioning -->
+        <Version>0.1.0</Version>            
+    </PropertyGroup>
+
+    <!-- Would love StartsWith support here -->
+    <!-- Should probably define some helper constants for NET_STANDARD and NET_CORE too -->
+    <PropertyGroup Condition="'$(TargetFramework)'=='net471' Or '$(TargetFramework)'=='net472' Or '$(TargetFramework)'=='net47'">
+        <DefineConstants>$(DefineConstants);NET_FRAMEWORK</DefineConstants>
+    </PropertyGroup>
+</Project>
