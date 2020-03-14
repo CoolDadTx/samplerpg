@@ -21,12 +21,13 @@ namespace SampleRpg.Wpf
             DataContext = _session;
         }
         #endregion
-        
+
         //TODO: Make this a command
-        private void OnAddXP ( object sender, RoutedEventArgs e )
-        {
-            _session.CurrentPlayer.ExperiencePoints += 10;
-        }
+        //TODO: Generalize this
+        private void OnMoveNorth ( object sender, RoutedEventArgs e ) => _session.MoveNorth();
+        private void OnMoveSouth ( object sender, RoutedEventArgs e ) => _session.MoveSouth();
+        private void OnMoveWest ( object sender, RoutedEventArgs e ) => _session.MoveWest();
+        private void OnMoveEast ( object sender, RoutedEventArgs e ) => _session.MoveEast();
 
         #region Private Members
 

@@ -4,7 +4,32 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <AssemblyName>SampleRpg</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\FarmFields.png" />
+    <None Remove="Resources\Images\Farmhouse.png" />
+    <None Remove="Resources\Images\HerbalistsGarden.png" />
+    <None Remove="Resources\Images\HerbalistsHut.png" />
+    <None Remove="Resources\Images\Home.png" />
+    <None Remove="Resources\Images\SpiderForest.png" />
+    <None Remove="Resources\Images\TownGate.png" />
+    <None Remove="Resources\Images\TownSquare.png" />
+    <None Remove="Resources\Images\Trader.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\Locations\FarmFields.png" />
+    <Resource Include="Resources\Images\Locations\Farmhouse.png" />
+    <Resource Include="Resources\Images\Locations\HerbalistsGarden.png" />
+    <Resource Include="Resources\Images\Locations\HerbalistsHut.png" />
+    <Resource Include="Resources\Images\Locations\Home.png" />
+    <Resource Include="Resources\Images\Locations\SpiderForest.png" />
+    <Resource Include="Resources\Images\Locations\TownGate.png" />
+    <Resource Include="Resources\Images\Locations\TownSquare.png" />
+    <Resource Include="Resources\Images\Locations\Trader.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SampleRpg.Engine\SampleRpg.Engine.csproj" />
