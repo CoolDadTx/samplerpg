@@ -11,10 +11,14 @@ namespace SampleRpg.Engine.ViewModels
         public GameSession ()
         {
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
+
+            CurrentPlayer = new Player() { Name = "Test", CharacterClass = "Fighter", HitPoints = 10, Gold = 1000 };
+            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1001));
+            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1002));
         }
 
         //TODO: Temporary init
-        public Player CurrentPlayer { get; set; } = new Player() { Name = "Test", CharacterClass = "Fighter", HitPoints = 10, Gold = 1000 };
+        public Player CurrentPlayer { get; set; }
 
         //TODO: Needed?
         public Location CurrentLocation 

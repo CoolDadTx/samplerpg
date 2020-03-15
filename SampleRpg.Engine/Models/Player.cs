@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace SampleRpg.Engine.Models
 {
+    //TODO: Move to root of project instead of "models" namespace
     //TODO: Don't agree with putting the interface here, shouldn't this be on the VM only
     /// <summary>Represents a playable character.</summary>
     public class Player : NotifyPropertyChangedObject
@@ -45,16 +47,9 @@ namespace SampleRpg.Engine.Models
             set => SetProperty(ref _gold, value, nameof(Gold));
         }
 
-        #region Private Members
+        public ObservableCollection<GameItem> Inventory { get; } = new ObservableCollection<GameItem>();
 
-        private void SetProperty<T>(ref T field, T value, string name ) where T: IEquatable<T>
-        {
-            if ((field == null && value != null) || !field.Equals(value))
-            {
-                field = value;
-                OnPropertyChanged(name);
-            };
-        }
+        #region Private Members        
 
         private string _name;
         private string _class;
