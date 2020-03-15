@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using SampleRpg.Engine.Factories;
 using SampleRpg.Engine.Models;
 
@@ -15,7 +16,6 @@ namespace SampleRpg.Engine.ViewModels
             CurrentPlayer = new Player() { Name = "Test", CharacterClass = "Fighter", HitPoints = 10, Gold = 1000 };
         }
 
-        //TODO: Temporary init
         public Player CurrentPlayer { get; set; }
 
         //TODO: Needed?
@@ -35,9 +35,24 @@ namespace SampleRpg.Engine.ViewModels
                     OnPropertyChanged(nameof(CanMoveWest));
 
                     CheckForQuests();
+                    CheckForEncounters();
                 };
             }
         }
+
+        public Monster CurrentEncounter
+        {
+            get => _monster;
+            set 
+            {
+                if (_monster != value)
+                {
+                    _monster = value;
+                    OnPropertyChanged(nameof(CurrentEncounter));
+                };
+            }
+        }
+        public bool HasEncounter => CurrentEncounter != null;
 
         public World CurrentWorld { get; set; } = WorldFactory.CreateWorld();
                 
@@ -82,6 +97,13 @@ namespace SampleRpg.Engine.ViewModels
             };
         }
 
+        //TODO: Make this a behavior of Location
+        private void CheckForEncounters ()
+        {
+            CurrentEncounter = CurrentLocation.GetEncounter();
+        }
+
         private Location _location;
+        private Monster _monster;
     }
 }
