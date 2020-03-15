@@ -6,9 +6,9 @@ using SampleRpg.Engine.Models;
 namespace SampleRpg.Engine.Factories
 {
     //TODO: Is this better handled using a reader type
-    internal class WorldFactory
+    internal static class WorldFactory
     {
-        public World CreateWorld ()
+        public static World CreateWorld ()
         {
             return new World()
                         .AddLocation(-2, -1, "Farmer's Field", "Rows of corn", "pack://application:,,,/Resources/Images/Locations/FarmFields.png")

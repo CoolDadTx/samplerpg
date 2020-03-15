@@ -35,7 +35,7 @@ namespace SampleRpg.Engine.ViewModels
             }
         }
 
-        public World CurrentWorld { get; set; } = new WorldFactory().CreateWorld();
+        public World CurrentWorld { get; set; } = WorldFactory.CreateWorld();
                 
         public bool CanMoveNorth => CurrentWorld.GetLocationToNorth(CurrentLocation) != null;
         public bool CanMoveSouth => CurrentWorld.GetLocationToSouth(CurrentLocation) != null;
@@ -43,10 +43,30 @@ namespace SampleRpg.Engine.ViewModels
         public bool CanMoveWest => CurrentWorld.GetLocationToWest(CurrentLocation) != null;
 
         //TODO: Should this be elsewhere?
-        public void MoveNorth () => CurrentLocation = CurrentWorld.GetLocationToNorth(CurrentLocation);
-        public void MoveSouth () => CurrentLocation = CurrentWorld.GetLocationToSouth(CurrentLocation);
-        public void MoveEast () => CurrentLocation = CurrentWorld.GetLocationToEast(CurrentLocation);
-        public void MoveWest () => CurrentLocation = CurrentWorld.GetLocationToWest(CurrentLocation);
+        public void MoveNorth ()
+        {
+            var location = CurrentWorld.GetLocationToNorth(CurrentLocation);
+            if (location != null)
+                CurrentLocation = location;
+        }
+        public void MoveSouth ()
+        {
+            var location = CurrentWorld.GetLocationToSouth(CurrentLocation);
+            if (location != null)
+                CurrentLocation = location;
+        }
+        public void MoveEast ()
+        {            
+            var location = CurrentWorld.GetLocationToEast(CurrentLocation);
+            if (location != null)
+                CurrentLocation = location;
+        }
+        public void MoveWest ()
+        {
+            var location = CurrentWorld.GetLocationToWest(CurrentLocation);
+            if (location != null)
+                CurrentLocation = location;
+        }
 
         private Location _location;
     }
