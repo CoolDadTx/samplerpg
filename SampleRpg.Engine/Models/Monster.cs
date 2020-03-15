@@ -10,7 +10,7 @@ namespace SampleRpg.Engine.Models
         public string Name { get; set; }
         public string ImageName { get; set; }
 
-        public string ImagePath => $"pack://application:,,,;/Resources/Images/Monsters/{ImageName}";
+        public string ImagePath => $"pack://application:,,,/Resources/Images/Monsters/{ImageName}";
 
         public int MaximumHitPoints { get; set; }
         public int HitPoints

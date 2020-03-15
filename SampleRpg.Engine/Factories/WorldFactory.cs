@@ -28,7 +28,8 @@ namespace SampleRpg.Engine.Factories
             world.AddLocation(0, 1, "Herbalist's Hut", "Small hut of herbs", "pack://application:,,,/Resources/Images/Locations/HerbalistsHut.png")
                  .AddQuest(QuestFactory.FindQuest(1));
 
-            world.AddLocation(0, 2, "Herbalist's Garden", "Garden of herbalist", "pack://application:,,,/Resources/Images/Locations/HerbalistsGarden.png");
+            world.AddLocation(0, 2, "Herbalist's Garden", "Garden of herbalist", "pack://application:,,,/Resources/Images/Locations/HerbalistsGarden.png")
+                 .AddEncounter(1, 100);
                         
             return world;
         }

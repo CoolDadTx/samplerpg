@@ -49,6 +49,7 @@ namespace SampleRpg.Engine.ViewModels
                 {
                     _monster = value;
                     OnPropertyChanged(nameof(CurrentEncounter));
+                    OnPropertyChanged(nameof(HasEncounter));
                 };
             }
         }
