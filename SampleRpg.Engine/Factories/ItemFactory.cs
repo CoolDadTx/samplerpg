@@ -17,6 +17,10 @@ namespace SampleRpg.Engine.Factories
 
                 new GameItem() { ItemTypeId = 9001, Name = "Snake Fang", Price = 5 },
                 new GameItem() { ItemTypeId = 9002, Name = "Snakeskin", Price = 2 },
+                new GameItem() { ItemTypeId = 9003, Name = "Rat tail", Price = 1 },
+                new GameItem() { ItemTypeId = 9004, Name = "Rat fur", Price = 2 },
+                new GameItem() { ItemTypeId = 9005, Name = "Spider fang", Price = 1 },
+                new GameItem() { ItemTypeId = 9006, Name = "Spider silk", Price = 2 },
             };                
         }
 

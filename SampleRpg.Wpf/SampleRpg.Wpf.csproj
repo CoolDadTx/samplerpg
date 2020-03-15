@@ -13,6 +13,9 @@
     <None Remove="Resources\Images\HerbalistsGarden.png" />
     <None Remove="Resources\Images\HerbalistsHut.png" />
     <None Remove="Resources\Images\Home.png" />
+    <None Remove="Resources\Images\Monsters\GiantSpider.png" />
+    <None Remove="Resources\Images\Monsters\Rat.png" />
+    <None Remove="Resources\Images\Monsters\Snake.png" />
     <None Remove="Resources\Images\SpiderForest.png" />
     <None Remove="Resources\Images\TownGate.png" />
     <None Remove="Resources\Images\TownSquare.png" />
@@ -29,6 +32,9 @@
     <Resource Include="Resources\Images\Locations\TownGate.png" />
     <Resource Include="Resources\Images\Locations\TownSquare.png" />
     <Resource Include="Resources\Images\Locations\Trader.png" />
+    <Resource Include="Resources\Images\Monsters\GiantSpider.png" />
+    <Resource Include="Resources\Images\Monsters\Rat.png" />
+    <Resource Include="Resources\Images\Monsters\Snake.png" />
   </ItemGroup>
 
   <ItemGroup>
