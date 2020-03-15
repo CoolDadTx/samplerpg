@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using SampleRpg.Engine.Eventing;
 using SampleRpg.Engine.Factories;
 using SampleRpg.Engine.Models;
 
@@ -15,6 +16,8 @@ namespace SampleRpg.Engine.ViewModels
 
             CurrentPlayer = new Player() { Name = "Test", CharacterClass = "Fighter", HitPoints = 10, Gold = 1000 };
         }
+
+        public event EventHandler<GameMessageEventArgs> MessageRaised;
 
         public Player CurrentPlayer { get; set; }
 
@@ -50,6 +53,11 @@ namespace SampleRpg.Engine.ViewModels
                     _monster = value;
                     OnPropertyChanged(nameof(CurrentEncounter));
                     OnPropertyChanged(nameof(HasEncounter));
+
+                    if (CurrentEncounter != null)
+                    {                     
+                        OnMessageRaised($"You see a {CurrentEncounter.Name} here!");
+                    };
                 };
             }
         }
@@ -87,6 +95,8 @@ namespace SampleRpg.Engine.ViewModels
             if (location != null)
                 CurrentLocation = location;
         }
+
+        protected void OnMessageRaised ( string message ) => MessageRaised?.Invoke(this, new GameMessageEventArgs(message));
 
         //TODO: Make this a behavior of Location
         private void CheckForQuests ()
