@@ -13,5 +13,7 @@ namespace SampleRpg.Engine.Models
         public string Description { get; set; }
 
         public string ImageName { get; set; }
+
+        public List<Quest> AvailableQuests { get; } = new List<Quest>();            
     }
 }

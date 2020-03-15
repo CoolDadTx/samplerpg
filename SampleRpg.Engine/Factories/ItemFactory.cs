@@ -14,6 +14,9 @@ namespace SampleRpg.Engine.Factories
             s_items = new List<GameItem>() {
                 new Weapon() { ItemTypeId = 1001, Name = "Pointy Stick", Price = 1, MinimumDamage = 1, MaximumDamage = 2 },
                 new Weapon() { ItemTypeId = 1002, Name = "Rusty Sword", Price = 5, MinimumDamage = 1, MaximumDamage = 3 },
+
+                new GameItem() { ItemTypeId = 9001, Name = "Snake Fang", Price = 5 },
+                new GameItem() { ItemTypeId = 9002, Name = "Snakeskin", Price = 2 },
             };                
         }
 

@@ -7,17 +7,25 @@ namespace SampleRpg.Engine.Models
     //TODO: Wonder if this should be a relatively static data with a builder type instead?
     public class World
     {
-        public World AddLocation ( int x, int y, string name, string description, string image )
-        {            
-            _locations.Add(new Location() {
-                XCoordinate = x, 
+        public World AddLocation ( Location location )
+        {
+            _locations.Add(location);
+
+            return this;
+        }
+
+        public Location AddLocation ( int x, int y, string name, string description, string image )
+        {
+            var location = new Location() {
+                XCoordinate = x,
                 YCoordinate = y,
                 Name = name,
                 Description = description,
                 ImageName = image
-            });
+            };
 
-            return this;
+            AddLocation(location);
+            return location;
         }
 
         public Location GetLocationToNorth ( Location location ) => LocationAt(location.XCoordinate, location.YCoordinate + 1);

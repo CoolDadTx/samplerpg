@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Linq;
 using SampleRpg.Engine.Factories;
 using SampleRpg.Engine.Models;
 
@@ -13,8 +13,6 @@ namespace SampleRpg.Engine.ViewModels
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
 
             CurrentPlayer = new Player() { Name = "Test", CharacterClass = "Fighter", HitPoints = 10, Gold = 1000 };
-            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1001));
-            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1002));
         }
 
         //TODO: Temporary init
@@ -35,6 +33,8 @@ namespace SampleRpg.Engine.ViewModels
                     OnPropertyChanged(nameof(CanMoveSouth));
                     OnPropertyChanged(nameof(CanMoveEast));
                     OnPropertyChanged(nameof(CanMoveWest));
+
+                    CheckForQuests();
                 };
             }
         }
@@ -70,6 +70,16 @@ namespace SampleRpg.Engine.ViewModels
             var location = CurrentWorld.GetLocationToWest(CurrentLocation);
             if (location != null)
                 CurrentLocation = location;
+        }
+
+        //TODO: Make this a behavior of Location
+        private void CheckForQuests ()
+        {
+            foreach (var quest in CurrentLocation.AvailableQuests)
+            {
+                if (!CurrentPlayer.Quests.Any(i => i.Quest.Id == quest.Id))
+                    CurrentPlayer.Quests.Add(new QuestStatus() { Quest = quest });
+            };
         }
 
         private Location _location;

@@ -49,6 +49,9 @@ namespace SampleRpg.Engine.Models
 
         public ObservableCollection<GameItem> Inventory { get; } = new ObservableCollection<GameItem>();
 
+        //TODO: Consider moving completed quests into separate list so we don't go through them again
+        public ObservableCollection<QuestStatus> Quests { get; } = new ObservableCollection<QuestStatus>();
+
         #region Private Members        
 
         private string _name;
