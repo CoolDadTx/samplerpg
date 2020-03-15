@@ -1,11 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace SampleRpg.Engine.Models
 {
     //TODO: Don't agree with putting the interface here, shouldn't this be on the VM only
     /// <summary>Represents a playable character.</summary>
-    public class Player : INotifyPropertyChanged
+    public class Player : NotifyPropertyChangedObject
     {
         public string Name
         {
@@ -46,8 +45,6 @@ namespace SampleRpg.Engine.Models
             set => SetProperty(ref _gold, value, nameof(Gold));
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         #region Private Members
 
         private void SetProperty<T>(ref T field, T value, string name ) where T: IEquatable<T>
@@ -58,7 +55,6 @@ namespace SampleRpg.Engine.Models
                 OnPropertyChanged(name);
             };
         }
-        private void OnPropertyChanged ( string name ) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         private string _name;
         private string _class;

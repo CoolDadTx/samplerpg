@@ -1,19 +1,17 @@
 ﻿using System;
-using System.ComponentModel;
+
 using SampleRpg.Engine.Factories;
 using SampleRpg.Engine.Models;
 
 //TODO: Should ViewModels be in the UI because VMs are generally tied to the UI being rendered
 namespace SampleRpg.Engine.ViewModels
 {    
-    public class GameSession : INotifyPropertyChanged
+    public class GameSession : NotifyPropertyChangedObject
     {
         public GameSession ()
         {
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         //TODO: Temporary init
         public Player CurrentPlayer { get; set; } = new Player() { Name = "Test", CharacterClass = "Fighter", HitPoints = 10, Gold = 1000 };
@@ -49,8 +47,6 @@ namespace SampleRpg.Engine.ViewModels
         public void MoveSouth () => CurrentLocation = CurrentWorld.GetLocationToSouth(CurrentLocation);
         public void MoveEast () => CurrentLocation = CurrentWorld.GetLocationToEast(CurrentLocation);
         public void MoveWest () => CurrentLocation = CurrentWorld.GetLocationToWest(CurrentLocation);
-
-        protected virtual void OnPropertyChanged ( string name ) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         private Location _location;
     }
