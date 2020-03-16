@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
+
 using SampleRpg.Engine.Models;
 
 namespace SampleRpg.Engine.Factories
@@ -31,6 +30,6 @@ namespace SampleRpg.Engine.Factories
             return item?.Clone(true);
         }
 
-        private static List<GameItem> s_items;
+        private static readonly List<GameItem> s_items;
     }
 }

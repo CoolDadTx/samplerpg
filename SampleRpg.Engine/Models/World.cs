@@ -14,14 +14,14 @@ namespace SampleRpg.Engine.Models
             return this;
         }
 
-        public Location AddLocation ( int x, int y, string name, string description, string image )
+        public Location AddLocation ( int x, int y, string name, string description, string imageName )
         {
             var location = new Location() {
                 XCoordinate = x,
                 YCoordinate = y,
                 Name = name,
                 Description = description,
-                ImageName = image
+                ImageName = imageName
             };
 
             AddLocation(location);

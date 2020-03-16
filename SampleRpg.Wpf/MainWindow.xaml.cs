@@ -18,7 +18,6 @@ namespace SampleRpg.Wpf
             InitializeComponent();
 
             //TODO: Do this via bindings
-            _session = new GameSession();
             _session.MessageRaised += OnMessageRaised;
 
             DataContext = _session;
@@ -42,7 +41,8 @@ namespace SampleRpg.Wpf
 
         #region Private Members
 
-        private GameSession _session;
+        private readonly GameSession _session = new GameSession();
+            
         #endregion
     }
 }

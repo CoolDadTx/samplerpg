@@ -16,6 +16,8 @@ namespace SampleRpg.Engine.Models
 
         public string ImageName { get; set; }
 
+        public string ImagePath => $"pack://application:,,,/Resources/Images/Locations/{ImageName}";
+
         //TODO: Could add dups...
         public List<Quest> AvailableQuests { get; } = new List<Quest>();
 
