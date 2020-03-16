@@ -22,6 +22,10 @@ namespace SampleRpg.Engine.Models
         public int RewardXP { get; set; }
         public int RewardGold { get; set; }
 
+        //TODO: Make this a range...
+        public int MinimumDamage { get; set; }
+        public int MaximumDamage { get; set; }
+
         public ObservableCollection<ItemQuantity> Inventory { get; } = new ObservableCollection<ItemQuantity>();
 
         private int _hp;

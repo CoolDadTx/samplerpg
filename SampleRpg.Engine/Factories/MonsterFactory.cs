@@ -11,14 +11,17 @@ namespace SampleRpg.Engine.Factories
         {
             switch (id)
             {
-                case 1: return new Monster() { Name = "Snake", ImageName = "Snake.png", MaximumHitPoints = 4, HitPoints = 4, RewardXP = 5, RewardGold = 1 }
+                case 1: return new Monster() { Name = "Snake", ImageName = "Snake.png", MaximumHitPoints = 4, HitPoints = 4, RewardXP = 5, RewardGold = 1
+                                               , MinimumDamage = 1, MaximumDamage = 2 } 
                                     .AddLoot(9001, 25)
                                     .AddLoot(9002, 75);
-                case 2: return new Monster() { Name = "Rat", ImageName = "Rat.png", MaximumHitPoints = 5, HitPoints = 5, RewardXP = 5, RewardGold = 1 }
+                case 2: return new Monster() { Name = "Rat", ImageName = "Rat.png", MaximumHitPoints = 5, HitPoints = 5, RewardXP = 5, RewardGold = 1
+                                                 , MinimumDamage = 1, MaximumDamage = 2 }
                                     .AddLoot(9003, 25)
                                     .AddLoot(9004, 75);
 
-                case 3: return new Monster() { Name = "Giant Spider", ImageName = "GiantSpider.png", MaximumHitPoints = 10, HitPoints = 10, RewardXP = 10, RewardGold = 3 }
+                case 3: return new Monster() { Name = "Giant Spider", ImageName = "GiantSpider.png", MaximumHitPoints = 10, HitPoints = 10, RewardXP = 10, RewardGold = 3
+                                                , MinimumDamage = 1, MaximumDamage = 4 }
                                     .AddLoot(9005, 25)
                                     .AddLoot(9006, 75);
 

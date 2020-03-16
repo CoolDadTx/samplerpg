@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace SampleRpg.Engine.Models
 {
@@ -49,8 +53,20 @@ namespace SampleRpg.Engine.Models
 
         public ObservableCollection<GameItem> Inventory { get; } = new ObservableCollection<GameItem>();
 
+        //TODO: This is inefficient - should probably be attribute of ViewModel, not player        
+        public IEnumerable<GameItem> Weapons => Inventory.Where(i => i is Weapon).ToList();
+
         //TODO: Consider moving completed quests into separate list so we don't go through them again
         public ObservableCollection<QuestStatus> Quests { get; } = new ObservableCollection<QuestStatus>();
+
+        //TODO: This doesn't work if value is added to Inventory directly...
+        public void AddToInventory ( GameItem item )
+        {
+            //TODO: Doesn't handle adding multiple items of same type
+            Inventory.Add(item);
+
+            OnPropertyChanged(nameof(Weapons));
+        }
 
         #region Private Members        
 

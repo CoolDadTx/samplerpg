@@ -38,6 +38,8 @@ namespace SampleRpg.Wpf
             GameMessages.ScrollToEnd();
         }
 
+        private void OnAttack ( object sender, RoutedEventArgs e ) => _session.Attack();
+
         #region Private Members
 
         private GameSession _session;
