@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices.ComTypes;
 
 namespace SampleRpg.Engine.Models
@@ -60,12 +61,38 @@ namespace SampleRpg.Engine.Models
         public ObservableCollection<QuestStatus> Quests { get; } = new ObservableCollection<QuestStatus>();
 
         //TODO: This doesn't work if value is added to Inventory directly...
+        //TODO: Put in Inventory class
         public void AddToInventory ( GameItem item )
         {
             //TODO: Doesn't handle adding multiple items of same type
             Inventory.Add(item);
 
             OnPropertyChanged(nameof(Weapons));
+        }
+
+        //TODO: Put in Inventory class
+        public void RemoveFromInventory ( int id, int count = 1 )
+        {
+            //TODO: Doesn't work if item isn't same instance
+            while (count-- > 0)
+            {
+                var item = Inventory.FirstOrDefault(i => i.ItemTypeId == id);
+                if (item != null)
+                    Inventory.Remove(item);
+            };
+            OnPropertyChanged(nameof(Weapons));
+        }
+
+        //TODO: Shouldn't be an attribute of player
+        public bool HasAllItems ( IEnumerable<ItemQuantity> items )
+        {
+            foreach (var item in items)
+            {
+                if (Inventory.Where(x => x.ItemTypeId == item.ItemId).Count() < item.Quantity)
+                    return false;
+            };
+
+            return true;
         }
 
         #region Private Members        

@@ -6,8 +6,7 @@
         xmlns:vm="clr-namespace:SampleRpg.Engine.ViewModels;assembly=SampleRpg.Engine"
         d:DataContext="{d:DesignInstance vm:GameSession}"
         mc:Ignorable="d" FontSize="11pt"
-        Title="Sample RPG" Height="768" Width="1024">
-    
+        Title="Sample RPG" Height="768" Width="1024">    
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
     </Window.Resources>
@@ -155,7 +154,7 @@
                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding CurrentPlayer.Weapons}" SelectedItem="{Binding CurrentWeapon}" DisplayMemberPath="Name" SelectedValuePath="Id" />
+                <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding CurrentPlayer.Weapons}" SelectedItem="{Binding CurrentWeapon}" DisplayMemberPath="Name" SelectedValuePath="ItemTypeId" />
                 <Button Grid.Row="0" Grid.Column="2" Content="Use" Click="OnAttack" />
             </Grid>
             

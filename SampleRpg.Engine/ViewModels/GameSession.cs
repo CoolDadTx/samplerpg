@@ -43,6 +43,7 @@ namespace SampleRpg.Engine.ViewModels
                     OnPropertyChanged(nameof(CanMoveEast));
                     OnPropertyChanged(nameof(CanMoveWest));
 
+                    CompleteQuestsAtLocation();
                     CheckForQuests();
                     CheckForEncounters();
                 };
@@ -200,6 +201,54 @@ namespace SampleRpg.Engine.ViewModels
                 var newItem = ItemFactory.CreateGameItem(item.ItemId);
                 CurrentPlayer.AddToInventory(newItem);
                 OnMessageRaised($"You receive {item.Quantity} {newItem.Name}");
+            };
+        }
+
+        //TODO: Doesn't belong here
+        private void CompleteQuestsAtLocation ()
+        { 
+            foreach (var quest in CurrentLocation.AvailableQuests)
+            {
+                var status = CurrentPlayer.Quests.FirstOrDefault(q => q.Quest.Id == quest.Id && !q.IsCompleted);
+                if (status == null)
+                    continue;
+
+                if (!CurrentPlayer.HasAllItems(quest.ItemsToComplete))
+                    continue;
+
+                //Remove items
+                foreach (var item in quest.ItemsToComplete)
+                {
+                    CurrentPlayer.RemoveFromInventory(item.ItemId, item.Quantity);
+                };
+
+                //Reward                
+                CurrentPlayer.ExperiencePoints += quest.RewardXp;
+                OnMessageRaised($"You completed '{quest.Name} and received {quest.RewardXp} XP");
+                if (quest.RewardGold > 0)
+                {
+                    CurrentPlayer.Gold += quest.RewardGold;
+                    OnMessageRaised($"You received {quest.RewardGold} gold");
+                };
+                
+                foreach (var item in quest.RewardItems)                
+                {
+                    var itemName = "";
+                        
+                    //HACK:
+                    var num = item.Quantity;
+                    while (num-- >= 0)
+                    {
+                        var newItem = ItemFactory.CreateGameItem(item.ItemId);
+                        itemName = newItem.Name;
+
+                        CurrentPlayer.AddToInventory(newItem);                        
+                    };
+                    OnMessageRaised($"You received {item.Quantity} {itemName}");
+                };
+
+                //Done
+                status.IsCompleted = true;
             };
         }
 

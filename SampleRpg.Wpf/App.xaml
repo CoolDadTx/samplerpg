@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:SampleRpg.Wpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--- Fixes issue with binding error on combobox, issue with WPF -->
+        <Style TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
     </Application.Resources>
 </Application>
