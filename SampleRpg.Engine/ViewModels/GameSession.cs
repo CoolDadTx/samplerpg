@@ -46,6 +46,8 @@ namespace SampleRpg.Engine.ViewModels
                     CompleteQuestsAtLocation();
                     CheckForQuests();
                     CheckForEncounters();
+
+                    CurrentTrader = _location.TraderHere;
                 };
             }
         }
@@ -71,6 +73,23 @@ namespace SampleRpg.Engine.ViewModels
         public bool HasEncounter => CurrentEncounter != null;
 
         public World CurrentWorld { get; set; } = WorldFactory.CreateWorld();
+        public Trader CurrentTrader 
+        {
+            get => _trader;
+            set {
+                if (_trader != value)
+                {
+                    _trader = value;
+                    OnPropertyChanged(nameof(CurrentTrader));
+                    OnPropertyChanged(nameof(HasTrader));
+                };
+            }
+        }
+        public bool HasTrader => CurrentTrader != null;
+
+        public void Trade ()
+        {
+        }
                 
         public bool CanMoveNorth => CurrentWorld.GetLocationToNorth(CurrentLocation) != null;
         public bool CanMoveSouth => CurrentWorld.GetLocationToSouth(CurrentLocation) != null;
@@ -144,7 +163,8 @@ namespace SampleRpg.Engine.ViewModels
         //TODO: Make this a behavior of Location
         private void CheckForQuests ()
         {
-            foreach (var quest in CurrentLocation.AvailableQuests)
+            var quests = CurrentLocation.GetQuests();
+            foreach (var quest in quests)
             {
                 if (!CurrentPlayer.Quests.Any(i => i.Quest.Id == quest.Id))
                     CurrentPlayer.Quests.Add(new QuestStatus() { Quest = quest });
@@ -206,8 +226,9 @@ namespace SampleRpg.Engine.ViewModels
 
         //TODO: Doesn't belong here
         private void CompleteQuestsAtLocation ()
-        { 
-            foreach (var quest in CurrentLocation.AvailableQuests)
+        {
+            var quests = CurrentLocation.GetQuests();
+            foreach (var quest in quests)
             {
                 var status = CurrentPlayer.Quests.FirstOrDefault(q => q.Quest.Id == quest.Id && !q.IsCompleted);
                 if (status == null)
@@ -254,5 +275,6 @@ namespace SampleRpg.Engine.ViewModels
 
         private Location _location;
         private Monster _monster;
+        private Trader _trader;
     }
 }

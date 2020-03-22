@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace SampleRpg.Engine.Models
 {
@@ -63,11 +60,12 @@ namespace SampleRpg.Engine.Models
         //TODO: This doesn't work if value is added to Inventory directly...
         //TODO: Put in Inventory class
         public void AddToInventory ( GameItem item )
-        {
+        {                            
             //TODO: Doesn't handle adding multiple items of same type
             Inventory.Add(item);
 
-            OnPropertyChanged(nameof(Weapons));
+            if (item is Weapon)
+                OnPropertyChanged(nameof(Weapons));
         }
 
         //TODO: Put in Inventory class

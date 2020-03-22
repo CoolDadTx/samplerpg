@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 using SampleRpg.Engine.Factories;
 
 namespace SampleRpg.Engine.Models
@@ -18,12 +18,29 @@ namespace SampleRpg.Engine.Models
 
         public string ImagePath => $"pack://application:,,,/Resources/Images/Locations/{ImageName}";
 
-        //TODO: Could add dups...
-        public List<Quest> AvailableQuests { get; } = new List<Quest>();
+        public Trader TraderHere { get; set; }
 
-        //TODO: Could add dups...
-        public List<Encounter> Encounters { get; } = new List<Encounter>();
-                
+        public Location AddEncounter ( int monsterId, int percentage )
+        {
+            var existing = Encounters.FirstOrDefault(x => x.MonsterId == monsterId);
+            if (existing != null)
+                existing.Percentage = percentage;
+            else
+                Encounters.Add(new Encounter() { MonsterId = monsterId, Percentage = percentage });
+
+            return this;
+        }
+
+        //TODO: Should use just quest Id
+        public Location AddQuest ( Quest quest )
+        {
+            var existing = AvailableQuests.FirstOrDefault(x => x.Id == quest.Id);
+            if (existing == null)
+                AvailableQuests.Add(quest);
+
+            return this;
+        }
+
         public Monster GetEncounter ()
         {
             if (!Encounters.Any())
@@ -41,6 +58,14 @@ namespace SampleRpg.Engine.Models
             };
 
             return null;
-        }
+        }        
+
+        public IEnumerable<Quest> GetQuests () => AvailableQuests;
+
+        //TODO: Query for traders at location instead of making it part of location
+        private List<Encounter> Encounters { get; } = new List<Encounter>();
+
+        //TODO: Query for quests at location instead of making it part of location
+        private List<Quest> AvailableQuests { get; } = new List<Quest>();
     }
 }
