@@ -31,7 +31,15 @@ namespace SampleRpg.Wpf
         private void OnMoveWest ( object sender, RoutedEventArgs e ) => _session.MoveWest();
         private void OnMoveEast ( object sender, RoutedEventArgs e ) => _session.MoveEast();
 
-        private void OnTrade ( object sender, RoutedEventArgs e ) => _session.Trade();
+        private void OnTrade ( object sender, RoutedEventArgs e )
+        {
+            var child = new TradeWindow() {
+                Owner = this,
+                DataContext = _session
+            };
+
+            child.ShowDialog();
+        }
 
         private void OnMessageRaised ( object sender, GameMessageEventArgs e )
         {

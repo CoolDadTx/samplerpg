@@ -86,10 +86,6 @@ namespace SampleRpg.Engine.ViewModels
             }
         }
         public bool HasTrader => CurrentTrader != null;
-
-        public void Trade ()
-        {
-        }
                 
         public bool CanMoveNorth => CurrentWorld.GetLocationToNorth(CurrentLocation) != null;
         public bool CanMoveSouth => CurrentWorld.GetLocationToSouth(CurrentLocation) != null;
