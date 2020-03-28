@@ -1,26 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 using SampleRpg.Engine.Models;
 
 namespace SampleRpg.Engine.Factories
 {
     public static class MonsterFactory
     {
+        //TODO: Create helper method for creating monsters
         public static Monster Get ( int id )
-        {
+        {            
             switch (id)
             {
-                case 1: return new Monster() { Name = "Snake", ImageName = "Snake.png", MaximumHitPoints = 4, HitPoints = 4, RewardXP = 5, RewardGold = 1
+                case 1: return new Monster() { Name = "Snake", ImageName = "Snake.png", MaximumHitPoints = 4, CurrentHitPoints = 4, RewardXP = 5, Gold = 1
                                                , MinimumDamage = 1, MaximumDamage = 2 } 
                                     .AddLoot(9001, 25)
                                     .AddLoot(9002, 75);
-                case 2: return new Monster() { Name = "Rat", ImageName = "Rat.png", MaximumHitPoints = 5, HitPoints = 5, RewardXP = 5, RewardGold = 1
+                case 2: return new Monster() { Name = "Rat", ImageName = "Rat.png", MaximumHitPoints = 5, CurrentHitPoints = 5, RewardXP = 5, Gold = 1
                                                  , MinimumDamage = 1, MaximumDamage = 2 }
                                     .AddLoot(9003, 25)
                                     .AddLoot(9004, 75);
 
-                case 3: return new Monster() { Name = "Giant Spider", ImageName = "GiantSpider.png", MaximumHitPoints = 10, HitPoints = 10, RewardXP = 10, RewardGold = 3
+                case 3: return new Monster() { Name = "Giant Spider", ImageName = "GiantSpider.png", MaximumHitPoints = 10, CurrentHitPoints = 10, RewardXP = 10, Gold = 3
                                                 , MinimumDamage = 1, MaximumDamage = 4 }
                                     .AddLoot(9005, 25)
                                     .AddLoot(9006, 75);
@@ -33,7 +33,7 @@ namespace SampleRpg.Engine.Factories
         private static Monster AddLoot ( this Monster monster, int itemId, int percentage )
         {
             if (Rng.Between(1, 100) <= percentage)
-                monster.Inventory.Add(new ItemQuantity() { ItemId = itemId, Quantity = 1 });
+                monster.Inventory.Add(ItemFactory.CreateGameItem(itemId));
 
             return monster;
         }    

@@ -23,7 +23,7 @@ namespace SampleRpg.Wpf
             if (item != null)
             {
                 Session.CurrentPlayer.Gold -= item.Price;
-                Session.CurrentTrader.RemoveFromInventory(item);
+                Session.CurrentTrader.RemoveFromInventory(item.ItemTypeId);
                 Session.CurrentPlayer.AddToInventory(item);
             };
         }

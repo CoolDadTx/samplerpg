@@ -14,7 +14,7 @@ namespace SampleRpg.Engine.ViewModels
         {
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
             
-            CurrentPlayer = new Player() { Name = "Test", CharacterClass = "Fighter", HitPoints = 10, Gold = 1000 };
+            CurrentPlayer = new Player() { Name = "Test", CharacterClass = "Fighter", CurrentHitPoints = 10, MaximumHitPoints = 10, Gold = 1000 };
 
             //TODO: Temp
             CurrentPlayer.AddToInventory(ItemFactory.CreateGameItem(1001));                        
@@ -107,14 +107,14 @@ namespace SampleRpg.Engine.ViewModels
             var dmg = Rng.Between(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage);
             if (dmg > 0)
             {
-                target.HitPoints = Math.Max(0, target.HitPoints - dmg);
+                target.CurrentHitPoints = Math.Max(0, target.CurrentHitPoints - dmg);
                 OnMessageRaised($"You hit {target.Name} for {dmg} damage");
             } else
             {
                 OnMessageRaised("You missed");                
             };
 
-            if (target.HitPoints <= 0)
+            if (target.CurrentHitPoints <= 0)
             {
                 EndCombat(target);
 
@@ -183,7 +183,7 @@ namespace SampleRpg.Engine.ViewModels
                 return;
             } else
             {
-                CurrentPlayer.HitPoints = Math.Max(0, CurrentPlayer.HitPoints - dmg);
+                CurrentPlayer.CurrentHitPoints = Math.Max(0, CurrentPlayer.CurrentHitPoints - dmg);
                 OnMessageRaised($"You were hit for {dmg} points of damage");                
             };
         }
@@ -191,13 +191,13 @@ namespace SampleRpg.Engine.ViewModels
         //TODO: Should we do something different with return type?
         private void CheckPlayerStatus ()
         {
-            if (CurrentPlayer.HitPoints <= 0)
+            if (CurrentPlayer.CurrentHitPoints <= 0)
             {
                 OnMessageRaised("You are dead");
 
                 //TODO: Restart
                 CurrentLocation = CurrentWorld.LocationAt(0, -1);
-                CurrentPlayer.HitPoints = CurrentPlayer.Level * 10;
+                CurrentPlayer.CurrentHitPoints = CurrentPlayer.MaximumHitPoints = CurrentPlayer.Level * 10;
             };
         }
 
@@ -208,15 +208,13 @@ namespace SampleRpg.Engine.ViewModels
             CurrentPlayer.ExperiencePoints += monster.RewardXP;
             OnMessageRaised($"You receive {monster.RewardXP} experience");
 
-            CurrentPlayer.Gold += monster.RewardGold;
-            OnMessageRaised($"You receive {monster.RewardGold} gold");
+            CurrentPlayer.Gold += monster.Gold;
+            OnMessageRaised($"You receive {monster.Gold} gold");
 
             foreach (var item in monster.Inventory)
             {
-                //TODO: Does this actually add the appropriate quantity?
-                var newItem = ItemFactory.CreateGameItem(item.ItemId);
-                CurrentPlayer.AddToInventory(newItem);
-                OnMessageRaised($"You receive {item.Quantity} {newItem.Name}");
+                CurrentPlayer.AddToInventory(item);
+                OnMessageRaised($"You receive a(n) {item.Name}");
             };
         }
 
