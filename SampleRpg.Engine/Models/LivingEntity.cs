@@ -59,14 +59,24 @@ namespace SampleRpg.Engine.Models
         }
 
         //TODO: Convert to Inventory type
-        public ObservableCollection<GameItem> Inventory { get; set; } = new ObservableCollection<GameItem>();
+        public ObservableCollection<InventoryItem> Inventory { get; set; } = new ObservableCollection<InventoryItem>();
 
         //TODO: This doesn't work if value is added to Inventory directly...
         //TODO: Put in Inventory class
-        public void AddToInventory ( GameItem item )
+        public void AddToInventory ( GameItem item, int quantity = 1 )
         {
-            //TODO: Doesn't handle adding multiple items of same type
-            Inventory.Add(item);
+            if (item.IsUnique)
+                Inventory.Add(new InventoryItem() { Item = item, Quantity = 1 });
+            else //Increment the existing inventory or add a new one
+            {
+                var existing = FindInventoryItem(item.ItemTypeId);
+                if (existing == null)
+                {
+                    existing = new InventoryItem() { Item = item, Quantity = quantity };
+                    Inventory.Add(existing);
+                } else
+                    existing.Quantity += quantity;
+            };
 
             if (item is Weapon)
                 OnPropertyChanged(nameof(Weapons));
@@ -75,22 +85,25 @@ namespace SampleRpg.Engine.Models
         //TODO: Put in Inventory class
         public void RemoveFromInventory ( int id, int count = 1 )
         {
-            //TODO: Doesn't work if item isn't same instance
-            while (count-- > 0)
-            {
-                var item = Inventory.FirstOrDefault(i => i.ItemTypeId == id);
-                if (item != null)
-                    Inventory.Remove(item);
-            };
-            OnPropertyChanged(nameof(Weapons));
+            var existing = FindInventoryItem(id);
+            if (existing == null)
+                return;
+
+            existing.Quantity -= count;
+            if (existing.Quantity <= 0)
+                Inventory.Remove(existing);
+
+            if (existing.Item is Weapon)
+                OnPropertyChanged(nameof(Weapons));
         }
 
         //TODO: Shouldn't be an attribute of player
         public bool HasAllItems ( IEnumerable<ItemQuantity> items )
-        {
+        {            
             foreach (var item in items)
             {
-                if (Inventory.Where(x => x.ItemTypeId == item.ItemId).Count() < item.Quantity)
+                var existing = FindInventoryItem(item.ItemId);
+                if ((existing?.Quantity ?? 0) < item.Quantity)                
                     return false;
             };
 
@@ -98,9 +111,11 @@ namespace SampleRpg.Engine.Models
         }
 
         //TODO: Why are we using List<T> here?
-        public IEnumerable<Weapon> Weapons => Inventory.OfType<Weapon>();
+        public IEnumerable<Weapon> Weapons => Inventory.Select(i => i.Item).OfType<Weapon>();
 
         #region Private Members
+
+        private InventoryItem FindInventoryItem ( int id ) => Inventory.FirstOrDefault(x => x.Item.ItemTypeId == id);
 
         private string _name;
 

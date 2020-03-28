@@ -213,8 +213,8 @@ namespace SampleRpg.Engine.ViewModels
 
             foreach (var item in monster.Inventory)
             {
-                CurrentPlayer.AddToInventory(item);
-                OnMessageRaised($"You receive a(n) {item.Name}");
+                CurrentPlayer.AddToInventory(item.Item, item.Quantity);
+                OnMessageRaised($"You receive {item.Quantity} {item.Item.Name}");
             };
         }
 

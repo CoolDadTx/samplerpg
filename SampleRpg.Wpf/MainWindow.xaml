@@ -120,8 +120,9 @@
                 <TabItem Header="Inventory">
                     <DataGrid ItemsSource="{Binding CurrentPlayer.Inventory}" AutoGenerateColumns="False"  HeadersVisibility="Column">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Name}" Width="*" />
-                            <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="Auto" />
+                            <DataGridTextColumn Header="Description" Binding="{Binding Item.Name}" Width="*" />
+                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="Auto" />
+                            <DataGridTextColumn Header="Price" Binding="{Binding Item.Price}" Width="Auto" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

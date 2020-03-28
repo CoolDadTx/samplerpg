@@ -19,23 +19,23 @@ namespace SampleRpg.Wpf
 
         private void OnBuy ( object sender, RoutedEventArgs e)
         {
-            var item = ((FrameworkElement)sender).DataContext as GameItem;
+            var item = ((FrameworkElement)sender).DataContext as InventoryItem;
             if (item != null)
             {
-                Session.CurrentPlayer.Gold -= item.Price;
-                Session.CurrentTrader.RemoveFromInventory(item.ItemTypeId);
-                Session.CurrentPlayer.AddToInventory(item);
+                Session.CurrentPlayer.Gold -= item.Item.Price;
+                Session.CurrentTrader.RemoveFromInventory(item.Item.ItemTypeId);
+                Session.CurrentPlayer.AddToInventory(item.Item);
             };
         }
 
         private void OnSell ( object sender, RoutedEventArgs e )
         {
-            var item = ((FrameworkElement)sender).DataContext as GameItem;
+            var item = ((FrameworkElement)sender).DataContext as InventoryItem;
             if (item != null)
             {
-                Session.CurrentPlayer.Gold += item.Price;
-                Session.CurrentPlayer.RemoveFromInventory(item.ItemTypeId);
-                Session.CurrentTrader.AddToInventory(item);                
+                Session.CurrentPlayer.Gold += item.Item.Price;
+                Session.CurrentPlayer.RemoveFromInventory(item.Item.ItemTypeId);
+                Session.CurrentTrader.AddToInventory(item.Item);                
             };
         }
 

@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SampleRpg.Engine.Models
 {    
     public class Weapon : GameItem
     {
+        public Weapon ()
+        {
+            //TODO: Don't agree with this
+            IsUnique = true;
+        }
+
         public int MinimumDamage { get; set; }
         
         public int MaximumDamage { get; set; }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace SampleRpg.Engine.Models
 {
@@ -13,6 +10,8 @@ namespace SampleRpg.Engine.Models
         public string Name { get; set; }
 
         public int Price { get; set; }
+
+        public bool IsUnique { get; set; }
         
         public virtual GameItem Clone ( bool deepClone )
         {
@@ -29,6 +28,7 @@ namespace SampleRpg.Engine.Models
             item.ItemTypeId = ItemTypeId;
             item.Name = Name;
             item.Price = Price;
+            item.IsUnique = IsUnique;
         }
     }
 }
