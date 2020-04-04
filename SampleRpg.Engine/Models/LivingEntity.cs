@@ -10,11 +10,12 @@ namespace SampleRpg.Engine.Models
     {
         //TODO: Not maintainable, should use a DTO or something so ctors are not so large...
         //TODO: Changed rules, maxHitPoints is max HPs and can reduce HP by taking damage after that...
-        protected LivingEntity ( string name, int maxHitPoints, int gold = 0 )
+        protected LivingEntity ( string name, int maxHitPoints, int gold = 0, int level = 1 )
         {
             Name = name;
             CurrentHitPoints = MaximumHitPoints = maxHitPoints;
             Gold = gold;
+            Level = level;
         }
 
         public event EventHandler Died;
@@ -50,7 +51,7 @@ namespace SampleRpg.Engine.Models
         public int MaximumHitPoints
         {
             get => _maxHP;
-            private set {
+            protected set {
                 if (_maxHP != value)
                 {
                     _maxHP = value;
@@ -71,6 +72,14 @@ namespace SampleRpg.Engine.Models
                     OnPropertyChanged(nameof(Gold));
                 };
             }
+        }
+
+        //TODO: Make this calculated based upon XP but cached
+        //TODO: Shouldn't be settable really...
+        public int Level
+        {
+            get => _level;
+            protected set => SetProperty(ref _level, value, nameof(Level));
         }
 
         //TODO: Convert to Inventory type
@@ -167,6 +176,8 @@ namespace SampleRpg.Engine.Models
 
         private int _currentHP, _maxHP;
         private int _gold;
+
+        private int _level;
         #endregion
     }
 }

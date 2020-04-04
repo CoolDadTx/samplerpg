@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
+
 using SampleRpg.Engine.Eventing;
 using SampleRpg.Engine.Factories;
 using SampleRpg.Engine.Models;
@@ -27,13 +27,11 @@ namespace SampleRpg.Engine.ViewModels
             {
                 if (_player != value)
                 {
-                    if (_player != null)
-                        _player.Died -= OnPlayerDied;
-
+                    HandleEvents(_player, false);
+                    
                     _player = value;
 
-                    if (_player != null)
-                        _player.Died += OnPlayerDied;
+                    HandleEvents(_player, true);
 
                     OnPropertyChanged(nameof(CurrentPlayer));
                 };
@@ -225,7 +223,7 @@ namespace SampleRpg.Engine.ViewModels
                 };
 
                 //Reward                
-                CurrentPlayer.ExperiencePoints += quest.RewardXp;
+                CurrentPlayer.AddXP(quest.RewardXp);
                 OnMessageRaised($"You completed '{quest.Name} and received {quest.RewardXp} XP");
                 if (quest.RewardGold > 0)
                 {
@@ -254,18 +252,36 @@ namespace SampleRpg.Engine.ViewModels
             };
         }
 
+        #region Event Handlers
+
+        private void HandleEvents ( Player player, bool subscribe )
+        {
+            if (player == null)
+                return;
+
+            if (subscribe)
+            {
+                player.Died += OnPlayerDied;
+                player.LeveledUp += OnPlayerLevelUp;
+            } else
+            {
+                player.Died -= OnPlayerDied;
+                player.LeveledUp -= OnPlayerLevelUp;
+            };
+        }
+        
         private void OnMonsterDied ( object sender, EventArgs e )
         {
             var monster = CurrentEncounter;
 
             OnMessageRaised($"You killed {monster.Name}");
 
-            CurrentPlayer.ExperiencePoints += monster.RewardXP;
             OnMessageRaised($"You receive {monster.RewardXP} experience");
+            CurrentPlayer.AddXP(monster.RewardXP);
 
-            CurrentPlayer.AddGold(monster.Gold);
             OnMessageRaised($"You receive {monster.Gold} gold");
-
+            CurrentPlayer.AddGold(monster.Gold);
+            
             foreach (var item in monster.Inventory)
             {
                 CurrentPlayer.AddToInventory(item.Item, item.Quantity);
@@ -281,6 +297,12 @@ namespace SampleRpg.Engine.ViewModels
             CurrentLocation = CurrentWorld.LocationAt(0, -1);
             CurrentPlayer.HealAll();
         }
+
+        private void OnPlayerLevelUp ( object sender, EventArgs e )
+        {
+            OnMessageRaised($"You have gained a new level (Level {CurrentPlayer.Level})");
+        }
+        #endregion
 
         private Location _location;
         private Monster _monster;
