@@ -2,19 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using P3Net.Kraken;
+
 using SampleRpg.Engine.Factories;
 
 namespace SampleRpg.Engine.Models
 {    
     public class Location
     {
-        public int XCoordinate { get; set; }
-        public int YCoordinate { get; set; }
+        #region Construction
 
-        public string Name { get; set; }
-        public string Description { get; set; }
+        //TODO: Make a factory to create one of these or use a definition object - too many parameters
+        public Location ( int x, int y, string name, string description = null, string imageName = null )
+        {
+            XCoordinate = x;
+            YCoordinate = y;
+            Name = name;
+            Description = description ?? name;
+            ImageName = (imageName ?? name).RemoveAll(' ');
+        }
+        #endregion
 
-        public string ImageName { get; set; }
+        public int XCoordinate { get; }
+        public int YCoordinate { get; }
+
+        public string Name { get; }
+        public string Description { get; }
+
+        public string ImageName { get; }
 
         public string ImagePath => $"pack://application:,,,/Resources/Images/Locations/{ImageName}";
 
@@ -39,7 +54,7 @@ namespace SampleRpg.Engine.Models
                 AvailableQuests.Add(quest);
 
             return this;
-        }
+        }        
 
         public Monster GetEncounter ()
         {

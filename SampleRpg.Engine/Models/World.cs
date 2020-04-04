@@ -16,13 +16,7 @@ namespace SampleRpg.Engine.Models
 
         public Location AddLocation ( int x, int y, string name, string description, string imageName )
         {
-            var location = new Location() {
-                XCoordinate = x,
-                YCoordinate = y,
-                Name = name,
-                Description = description,
-                ImageName = imageName
-            };
+            var location = new Location(x, y, name, description, imageName);
 
             AddLocation(location);
             return location;

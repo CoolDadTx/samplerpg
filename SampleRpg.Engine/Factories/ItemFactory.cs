@@ -11,15 +11,15 @@ namespace SampleRpg.Engine.Factories
         static ItemFactory()
         {
             s_items = new List<GameItem>() {
-                new Weapon() { ItemTypeId = 1001, Name = "Pointy Stick", Price = 1, MinimumDamage = 1, MaximumDamage = 2 },
-                new Weapon() { ItemTypeId = 1002, Name = "Rusty Sword", Price = 5, MinimumDamage = 1, MaximumDamage = 3 },
+                new Weapon(1001, "Pointy Stick", 1, 1, 2),
+                new Weapon(1002, "Rusty Sword", 5, 1, 3),
 
-                new GameItem() { ItemTypeId = 9001, Name = "Snake Fang", Price = 5 },
-                new GameItem() { ItemTypeId = 9002, Name = "Snakeskin", Price = 2 },
-                new GameItem() { ItemTypeId = 9003, Name = "Rat tail", Price = 1 },
-                new GameItem() { ItemTypeId = 9004, Name = "Rat fur", Price = 2 },
-                new GameItem() { ItemTypeId = 9005, Name = "Spider fang", Price = 1 },
-                new GameItem() { ItemTypeId = 9006, Name = "Spider silk", Price = 2 },
+                new GameItem(9001, "Snake Fang", 5),
+                new GameItem(9002, "Snakeskin", 2),
+                new GameItem(9003, "Rat tail", 1),
+                new GameItem(9004, "Rat fur", 2),
+                new GameItem(9005, "Spider fang", 1),
+                new GameItem(9006, "Spider silk", 2),
             };                
         }
 

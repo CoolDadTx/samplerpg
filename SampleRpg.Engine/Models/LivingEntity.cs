@@ -83,7 +83,7 @@ namespace SampleRpg.Engine.Models
         }
 
         //TODO: Convert to Inventory type
-        public ObservableCollection<InventoryItem> Inventory { get; set; } = new ObservableCollection<InventoryItem>();
+        public ObservableCollection<InventoryItem> Inventory { get; } = new ObservableCollection<InventoryItem>();
 
         //TODO: This doesn't work if value is added to Inventory directly...
         //TODO: Put in Inventory class

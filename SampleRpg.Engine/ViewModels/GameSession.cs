@@ -178,7 +178,7 @@ namespace SampleRpg.Engine.ViewModels
             foreach (var quest in quests)
             {
                 if (!CurrentPlayer.Quests.Any(i => i.Quest.Id == quest.Id))
-                    CurrentPlayer.Quests.Add(new QuestStatus() { Quest = quest });
+                    CurrentPlayer.Quests.Add(new QuestStatus(quest));
             };
         }
 

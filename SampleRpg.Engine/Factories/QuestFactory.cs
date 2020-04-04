@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 using SampleRpg.Engine.Models;
 
 namespace SampleRpg.Engine.Factories
@@ -10,7 +10,7 @@ namespace SampleRpg.Engine.Factories
     {
         static QuestFactory()
         {
-            var quest = new Quest() { Id = 1, Name = "Clear the herb garden", Description = "Defeat the snakes in the Herbalist's garden", RewardXp = 25, RewardGold = 10 };
+            var quest = new Quest(1, "Clear the herb garden", "Defeat the snakes in the Herbalist's garden", rewardXp: 25, rewardGold: 10);
             quest.ItemsToComplete.Add(new ItemQuantity() { ItemId = 9002, Quantity = 2 });
             quest.RewardItems.Add(new ItemQuantity() { ItemId = 1002, Quantity = 1 });
 

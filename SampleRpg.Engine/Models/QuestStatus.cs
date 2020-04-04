@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SampleRpg.Engine.Models
 {
     public class QuestStatus : NotifyPropertyChangedObject
     {
-        //TODO: Just store ID so we can look up "current" quest rules later
-        public Quest Quest 
+        #region Construction
+
+        public QuestStatus ( Quest quest )
         {
-            get => _quest;
-            set
-            {
-                if (_quest != value)
-                {
-                    _quest = value;
-                    OnPropertyChanged(nameof(Quest));
-                };
-            }
+            Quest = quest;
         }
+        #endregion
+
+        //TODO: Just store ID so we can look up "current" quest rules later
+        public Quest Quest { get; }
 
         public bool IsCompleted
         {
@@ -26,7 +21,9 @@ namespace SampleRpg.Engine.Models
             set => SetProperty(ref _isCompleted, value, nameof(IsCompleted));
         }
 
-        private Quest _quest;
+        #region Private Members
+
         private bool _isCompleted;
+        #endregion
     }
 }

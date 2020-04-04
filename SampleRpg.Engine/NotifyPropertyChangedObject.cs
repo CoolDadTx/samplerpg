@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace SampleRpg.Engine
 {
@@ -9,7 +10,7 @@ namespace SampleRpg.Engine
 
         protected virtual void OnPropertyChanged ( string name ) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        protected void SetProperty<T> ( ref T field, T value, string name ) where T : IEquatable<T>
+        protected void SetProperty<T> ( ref T field, T value, [CallerMemberName] string name = "") where T : IEquatable<T>
         {
             if ((field == null && value != null) || !field.Equals(value))
             {
