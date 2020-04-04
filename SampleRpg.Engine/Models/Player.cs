@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace SampleRpg.Engine.Models
 {
@@ -9,11 +7,17 @@ namespace SampleRpg.Engine.Models
     /// <summary>Represents a playable character.</summary>
     public class Player : LivingEntity
     {
+        public Player ( string name, string characterClass, int hp, int gold = 0 ) : base(name, hp, gold)
+        {
+            CharacterClass = characterClass;
+
+        }
+
         //TODO: Make this a separate type
         public string CharacterClass
         {
             get => _class ?? "";
-            set => SetProperty(ref _class, value ?? "", nameof(CharacterClass));
+            private set => SetProperty(ref _class, value ?? "", nameof(CharacterClass));
         }
                 
         public int ExperiencePoints

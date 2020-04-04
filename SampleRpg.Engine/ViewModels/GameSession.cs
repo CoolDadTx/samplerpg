@@ -14,15 +14,31 @@ namespace SampleRpg.Engine.ViewModels
         {
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
             
-            CurrentPlayer = new Player() { Name = "Test", CharacterClass = "Fighter", CurrentHitPoints = 10, MaximumHitPoints = 10, Gold = 1000 };
-
-            //TODO: Temp
+            CurrentPlayer = new Player("Test", "Fighter", 10, gold: 1000);            
             CurrentPlayer.AddToInventory(ItemFactory.CreateGameItem(1001));                        
         }
 
         public event EventHandler<GameMessageEventArgs> MessageRaised;
 
-        public Player CurrentPlayer { get; set; }
+        public Player CurrentPlayer
+        {
+            get => _player;
+            set 
+            {
+                if (_player != value)
+                {
+                    if (_player != null)
+                        _player.Died -= OnPlayerDied;
+
+                    _player = value;
+
+                    if (_player != null)
+                        _player.Died += OnPlayerDied;
+
+                    OnPropertyChanged(nameof(CurrentPlayer));
+                };
+            }
+        }
 
         //TODO: Should be attribute of character
         public Weapon CurrentWeapon { get; set; }
@@ -59,14 +75,19 @@ namespace SampleRpg.Engine.ViewModels
             {
                 if (_monster != value)
                 {
-                    _monster = value;
-                    OnPropertyChanged(nameof(CurrentEncounter));
-                    OnPropertyChanged(nameof(HasEncounter));
+                    if (_monster != null)
+                        _monster.Died -= OnMonsterDied;
 
-                    if (CurrentEncounter != null)
-                    {                     
+                    _monster = value;
+
+                    if (_monster != null)
+                    {
+                        _monster.Died += OnMonsterDied;
                         OnMessageRaised($"You see a {CurrentEncounter.Name} here!");
                     };
+
+                    OnPropertyChanged(nameof(CurrentEncounter));
+                    OnPropertyChanged(nameof(HasEncounter));
                 };
             }
         }
@@ -107,17 +128,15 @@ namespace SampleRpg.Engine.ViewModels
             var dmg = Rng.Between(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage);
             if (dmg > 0)
             {
-                target.CurrentHitPoints = Math.Max(0, target.CurrentHitPoints - dmg);
                 OnMessageRaised($"You hit {target.Name} for {dmg} damage");
+                target.TakeDamage(dmg);                
             } else
             {
                 OnMessageRaised("You missed");                
             };
 
-            if (target.CurrentHitPoints <= 0)
-            {
-                EndCombat(target);
-
+            if (target.IsDead)
+            {              
                 //TODO: Why? - clear encounter otherwise can keep attacking
                 //CurrentLocation.GetEncounter();
                 CurrentEncounter = null;
@@ -125,8 +144,6 @@ namespace SampleRpg.Engine.ViewModels
             {
                 AttackPlayer(target);                
             };
-
-            CheckPlayerStatus();
         }
 
         public void MoveNorth ()
@@ -183,38 +200,8 @@ namespace SampleRpg.Engine.ViewModels
                 return;
             } else
             {
-                CurrentPlayer.CurrentHitPoints = Math.Max(0, CurrentPlayer.CurrentHitPoints - dmg);
-                OnMessageRaised($"You were hit for {dmg} points of damage");                
-            };
-        }
-
-        //TODO: Should we do something different with return type?
-        private void CheckPlayerStatus ()
-        {
-            if (CurrentPlayer.CurrentHitPoints <= 0)
-            {
-                OnMessageRaised("You are dead");
-
-                //TODO: Restart
-                CurrentLocation = CurrentWorld.LocationAt(0, -1);
-                CurrentPlayer.CurrentHitPoints = CurrentPlayer.MaximumHitPoints = CurrentPlayer.Level * 10;
-            };
-        }
-
-        private void EndCombat ( Monster monster )
-        {
-            OnMessageRaised($"You killed {monster.Name}");
-
-            CurrentPlayer.ExperiencePoints += monster.RewardXP;
-            OnMessageRaised($"You receive {monster.RewardXP} experience");
-
-            CurrentPlayer.Gold += monster.Gold;
-            OnMessageRaised($"You receive {monster.Gold} gold");
-
-            foreach (var item in monster.Inventory)
-            {
-                CurrentPlayer.AddToInventory(item.Item, item.Quantity);
-                OnMessageRaised($"You receive {item.Quantity} {item.Item.Name}");
+                OnMessageRaised($"You were hit for {dmg} points of damage");
+                CurrentPlayer.TakeDamage(dmg);                
             };
         }
 
@@ -242,7 +229,7 @@ namespace SampleRpg.Engine.ViewModels
                 OnMessageRaised($"You completed '{quest.Name} and received {quest.RewardXp} XP");
                 if (quest.RewardGold > 0)
                 {
-                    CurrentPlayer.Gold += quest.RewardGold;
+                    CurrentPlayer.AddGold(quest.RewardGold);
                     OnMessageRaised($"You received {quest.RewardGold} gold");
                 };
                 
@@ -267,8 +254,37 @@ namespace SampleRpg.Engine.ViewModels
             };
         }
 
+        private void OnMonsterDied ( object sender, EventArgs e )
+        {
+            var monster = CurrentEncounter;
+
+            OnMessageRaised($"You killed {monster.Name}");
+
+            CurrentPlayer.ExperiencePoints += monster.RewardXP;
+            OnMessageRaised($"You receive {monster.RewardXP} experience");
+
+            CurrentPlayer.AddGold(monster.Gold);
+            OnMessageRaised($"You receive {monster.Gold} gold");
+
+            foreach (var item in monster.Inventory)
+            {
+                CurrentPlayer.AddToInventory(item.Item, item.Quantity);
+                OnMessageRaised($"You receive {item.Quantity} {item.Item.Name}");
+            };
+        }
+
+        private void OnPlayerDied ( object sender, EventArgs e )
+        {
+            OnMessageRaised("You are dead");
+
+            //TODO: Restart
+            CurrentLocation = CurrentWorld.LocationAt(0, -1);
+            CurrentPlayer.HealAll();
+        }
+
         private Location _location;
         private Monster _monster;
         private Trader _trader;
+        private Player _player;
     }
 }

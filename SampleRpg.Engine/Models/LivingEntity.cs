@@ -8,6 +8,17 @@ namespace SampleRpg.Engine.Models
     //TODO: Don't agree with putting the interface here, shouldn't this be on the VM only
     public abstract class LivingEntity : NotifyPropertyChangedObject
     {
+        //TODO: Not maintainable, should use a DTO or something so ctors are not so large...
+        //TODO: Changed rules, maxHitPoints is max HPs and can reduce HP by taking damage after that...
+        protected LivingEntity ( string name, int maxHitPoints, int gold = 0 )
+        {
+            Name = name;
+            CurrentHitPoints = MaximumHitPoints = maxHitPoints;
+            Gold = gold;
+        }
+
+        public event EventHandler Died;
+
         public string Name
         {
             get => _name ?? "";
@@ -18,11 +29,11 @@ namespace SampleRpg.Engine.Models
             }
         }
 
-        //TODO: Need to add range checking
+        //TODO: How does locking down this property actually help anything?
         public int CurrentHitPoints
         {
             get => _currentHP;
-            set 
+            private set 
             {
                 if (_currentHP != value)
                 {
@@ -32,11 +43,14 @@ namespace SampleRpg.Engine.Models
             }
         }
 
+        public bool IsDead => CurrentHitPoints <= 0;
+
         //TODO: Need to add range checking
+        //TODO: How does locking down this property actually help anything?
         public int MaximumHitPoints
         {
             get => _maxHP;
-            set {
+            private set {
                 if (_maxHP != value)
                 {
                     _maxHP = value;
@@ -46,10 +60,11 @@ namespace SampleRpg.Engine.Models
         }
 
         //TODO: Need to add range checking
+        //TODO: How does locking down this property actually help anything?
         public int Gold
         {
             get => _gold;
-            set {
+            private set {
                 if (_gold != value)
                 {
                     _gold = value;
@@ -112,6 +127,37 @@ namespace SampleRpg.Engine.Models
 
         //TODO: Why are we using List<T> here?
         public IEnumerable<Weapon> Weapons => Inventory.Select(i => i.Item).OfType<Weapon>();
+
+        //TODO: Shouldn't this be part of HP property instead, what do we really gain here?                
+        public void Heal ( int hitPoints )
+        {
+            CurrentHitPoints = Math.Max(CurrentHitPoints + hitPoints, MaximumHitPoints);
+        }
+
+        public void HealAll () => CurrentHitPoints = MaximumHitPoints;
+
+        public void TakeDamage ( int damage )
+        {
+            CurrentHitPoints = Math.Max(0, CurrentHitPoints - damage);
+
+            if (IsDead)
+                OnDied();            
+        }
+
+        //TODO: How is this better than just using the setter?
+        public void AddGold ( int gold ) => Gold += gold;
+        public void RemoveGold ( int gold )
+        {
+            if (Gold < gold)
+                throw new ArgumentOutOfRangeException($"Insufficient gold, {Name} only has {Gold} gold");
+
+            Gold -= gold;
+        }
+
+        protected virtual void OnDied ()
+        {
+            Died?.Invoke(this, EventArgs.Empty);
+        }
 
         #region Private Members
 

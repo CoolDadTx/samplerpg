@@ -22,7 +22,7 @@ namespace SampleRpg.Wpf
             var item = ((FrameworkElement)sender).DataContext as InventoryItem;
             if (item != null)
             {
-                Session.CurrentPlayer.Gold -= item.Item.Price;
+                Session.CurrentPlayer.RemoveGold(item.Item.Price);
                 Session.CurrentTrader.RemoveFromInventory(item.Item.ItemTypeId);
                 Session.CurrentPlayer.AddToInventory(item.Item);
             };
@@ -33,7 +33,7 @@ namespace SampleRpg.Wpf
             var item = ((FrameworkElement)sender).DataContext as InventoryItem;
             if (item != null)
             {
-                Session.CurrentPlayer.Gold += item.Item.Price;
+                Session.CurrentPlayer.AddGold(item.Item.Price);
                 Session.CurrentPlayer.RemoveFromInventory(item.Item.ItemTypeId);
                 Session.CurrentTrader.AddToInventory(item.Item);                
             };
