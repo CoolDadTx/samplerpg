@@ -33,7 +33,7 @@ namespace SampleRpg.Engine.Factories
         private static Monster AddLoot ( this Monster monster, int itemId, int percentage )
         {
             if (Rng.Between(1, 100) <= percentage)
-                monster.AddToInventory(ItemFactory.CreateGameItem(itemId));
+                monster.AddToInventory(ItemFactory.NewItem(itemId));
 
             return monster;
         }    

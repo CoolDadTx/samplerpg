@@ -15,7 +15,7 @@ namespace SampleRpg.Engine.ViewModels
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
             
             CurrentPlayer = new Player("Test", "Fighter", 10, gold: 1000);            
-            CurrentPlayer.AddToInventory(ItemFactory.CreateGameItem(1001));                        
+            CurrentPlayer.AddToInventory(ItemFactory.NewItem(1001));                        
         }
 
         public event EventHandler<GameMessageEventArgs> MessageRaised;
@@ -39,7 +39,7 @@ namespace SampleRpg.Engine.ViewModels
         }
 
         //TODO: Should be attribute of character
-        public Weapon CurrentWeapon { get; set; }
+        public GameItem CurrentWeapon { get; set; }
 
         //TODO: Needed?
         public Location CurrentLocation 
@@ -239,7 +239,7 @@ namespace SampleRpg.Engine.ViewModels
                     var num = item.Quantity;
                     while (num-- >= 0)
                     {
-                        var newItem = ItemFactory.CreateGameItem(item.ItemId);
+                        var newItem = ItemFactory.NewItem(item.ItemId);
                         itemName = newItem.Name;
 
                         CurrentPlayer.AddToInventory(newItem);                        

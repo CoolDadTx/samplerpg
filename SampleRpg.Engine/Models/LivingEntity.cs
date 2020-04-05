@@ -10,10 +10,10 @@ namespace SampleRpg.Engine.Models
     {
         //TODO: Not maintainable, should use a DTO or something so ctors are not so large...
         //TODO: Changed rules, maxHitPoints is max HPs and can reduce HP by taking damage after that...
-        protected LivingEntity ( string name, int maxHitPoints, int gold = 0, int level = 1 )
+        protected LivingEntity ( string name, int hp, int gold = 0, int level = 1 )
         {
             Name = name;
-            CurrentHitPoints = MaximumHitPoints = maxHitPoints;
+            CurrentHitPoints = MaximumHitPoints = hp;
             Gold = gold;
             Level = level;
         }
@@ -93,7 +93,7 @@ namespace SampleRpg.Engine.Models
                 Inventory.Add(new InventoryItem() { Item = item, Quantity = 1 });
             else //Increment the existing inventory or add a new one
             {
-                var existing = FindInventoryItem(item.ItemTypeId);
+                var existing = FindInventoryItem(item.Id);
                 if (existing == null)
                 {
                     existing = new InventoryItem() { Item = item, Quantity = quantity };
@@ -102,7 +102,7 @@ namespace SampleRpg.Engine.Models
                     existing.Quantity += quantity;
             };
 
-            if (item is Weapon)
+            if (item.IsWeapon())
                 OnPropertyChanged(nameof(Weapons));
         }
 
@@ -117,7 +117,7 @@ namespace SampleRpg.Engine.Models
             if (existing.Quantity <= 0)
                 Inventory.Remove(existing);
 
-            if (existing.Item is Weapon)
+            if (existing.Item.IsWeapon())
                 OnPropertyChanged(nameof(Weapons));
         }
 
@@ -135,7 +135,7 @@ namespace SampleRpg.Engine.Models
         }
 
         //TODO: Why are we using List<T> here?
-        public IEnumerable<Weapon> Weapons => Inventory.Select(i => i.Item).OfType<Weapon>();
+        public IEnumerable<GameItem> Weapons => Inventory.Where(i => i.Item.IsWeapon()).Select(i => i.Item);
 
         //TODO: Shouldn't this be part of HP property instead, what do we really gain here?                
         public void Heal ( int hitPoints )
@@ -170,7 +170,7 @@ namespace SampleRpg.Engine.Models
 
         #region Private Members
 
-        private InventoryItem FindInventoryItem ( int id ) => Inventory.FirstOrDefault(x => x.Item.ItemTypeId == id);
+        private InventoryItem FindInventoryItem ( int id ) => Inventory.FirstOrDefault(x => x.Item.Id == id);
 
         private string _name;
 

@@ -23,7 +23,7 @@ namespace SampleRpg.Wpf
             if (item != null)
             {
                 Session.CurrentPlayer.RemoveGold(item.Item.Price);
-                Session.CurrentTrader.RemoveFromInventory(item.Item.ItemTypeId);
+                Session.CurrentTrader.RemoveFromInventory(item.Item.Id);
                 Session.CurrentPlayer.AddToInventory(item.Item);
             };
         }
@@ -34,7 +34,7 @@ namespace SampleRpg.Wpf
             if (item != null)
             {
                 Session.CurrentPlayer.AddGold(item.Item.Price);
-                Session.CurrentPlayer.RemoveFromInventory(item.Item.ItemTypeId);
+                Session.CurrentPlayer.RemoveFromInventory(item.Item.Id);
                 Session.CurrentTrader.AddToInventory(item.Item);                
             };
         }

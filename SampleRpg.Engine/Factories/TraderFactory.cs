@@ -11,13 +11,13 @@ namespace SampleRpg.Engine.Factories
         static TraderFactory ()
         {
             var susan = new Trader("Susan");
-            susan.AddToInventory(ItemFactory.CreateGameItem(1001));
+            susan.AddToInventory(ItemFactory.NewItem(1001));
 
             var ted = new Trader("Ted");
-            ted.AddToInventory(ItemFactory.CreateGameItem(1001));
+            ted.AddToInventory(ItemFactory.NewItem(1001));
 
             var pete = new Trader("Pete");
-            pete.AddToInventory(ItemFactory.CreateGameItem(1001));
+            pete.AddToInventory(ItemFactory.NewItem(1001));
 
             s_traders = new List<Trader>() { susan, ted, pete };                
         }
