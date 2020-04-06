@@ -38,9 +38,6 @@ namespace SampleRpg.Engine.ViewModels
             }
         }
 
-        //TODO: Should be attribute of character
-        public GameItem CurrentWeapon { get; set; }
-
         //TODO: Needed?
         public Location CurrentLocation 
         {
@@ -115,7 +112,7 @@ namespace SampleRpg.Engine.ViewModels
         public void Attack ()
         {
             //TODO: Implement a combat round loop - initiative, attacks, apply effects, etc
-            if (CurrentWeapon == null)
+            if (CurrentPlayer.CurrentWeapon == null)
             {
                 OnMessageRaised("You must have a weapon selected");
                 return;
@@ -123,15 +120,7 @@ namespace SampleRpg.Engine.ViewModels
 
             var target = CurrentEncounter;
 
-            var dmg = Rng.Between(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage);
-            if (dmg > 0)
-            {
-                OnMessageRaised($"You hit {target.Name} for {dmg} damage");
-                target.TakeDamage(dmg);                
-            } else
-            {
-                OnMessageRaised("You missed");                
-            };
+            CurrentPlayer.UseCurrentWeapon(target);
 
             if (target.IsDead)
             {              
@@ -263,10 +252,12 @@ namespace SampleRpg.Engine.ViewModels
             {
                 player.Died += OnPlayerDied;
                 player.LeveledUp += OnPlayerLevelUp;
+                player.ActionPerformed += OnPlayerActionPerformed;
             } else
             {
                 player.Died -= OnPlayerDied;
                 player.LeveledUp -= OnPlayerLevelUp;
+                player.ActionPerformed -= OnPlayerActionPerformed;
             };
         }
         
@@ -288,6 +279,8 @@ namespace SampleRpg.Engine.ViewModels
                 OnMessageRaised($"You receive {item.Quantity} {item.Item.Name}");
             };
         }
+
+        private void OnPlayerActionPerformed ( object sender, string message ) => OnMessageRaised(message);
 
         private void OnPlayerDied ( object sender, EventArgs e )
         {

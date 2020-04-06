@@ -20,6 +20,9 @@ namespace SampleRpg.Engine.Models
 
         public event EventHandler Died;
 
+        //TODO: Doesn't make sense to expose this from player...
+        public event EventHandler<string> ActionPerformed;
+
         public string Name
         {
             get => _name ?? "";
@@ -60,6 +63,27 @@ namespace SampleRpg.Engine.Models
             }
         }
 
+        public GameItem CurrentWeapon
+        {
+            get => _weapon;
+            set
+            {
+                if (_weapon == value)
+                    return;
+
+                if (_weapon != null)
+                    _weapon.AttackCommand.Executed -= OnActionPerformed;
+
+                _weapon = value;
+                if (_weapon != null)
+                    _weapon.AttackCommand.Executed += OnActionPerformed;
+
+                OnPropertyChanged(nameof(CurrentWeapon));
+            }
+        }
+
+        public void UseCurrentWeapon ( LivingEntity target ) => CurrentWeapon?.PerformAction(this, target);
+        
         //TODO: Need to add range checking
         //TODO: How does locking down this property actually help anything?
         public int Gold
@@ -163,12 +187,11 @@ namespace SampleRpg.Engine.Models
             Gold -= gold;
         }
 
-        protected virtual void OnDied ()
-        {
-            Died?.Invoke(this, EventArgs.Empty);
-        }
+        protected virtual void OnDied () => Died?.Invoke(this, EventArgs.Empty);
 
         #region Private Members
+
+        private void OnActionPerformed ( object sender, string message ) => ActionPerformed?.Invoke(this, message);
 
         private InventoryItem FindInventoryItem ( int id ) => Inventory.FirstOrDefault(x => x.Item.Id == id);
 
@@ -178,6 +201,8 @@ namespace SampleRpg.Engine.Models
         private int _gold;
 
         private int _level;
+
+        private GameItem _weapon;
         #endregion
     }
 }

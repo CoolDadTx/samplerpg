@@ -118,7 +118,7 @@
         <Grid Grid.Row="2" Grid.Column="0" Background="BurlyWood">
             <TabControl>
                 <TabItem Header="Inventory">
-                    <DataGrid ItemsSource="{Binding CurrentPlayer.Inventory}" AutoGenerateColumns="False"  HeadersVisibility="Column">
+                    <DataGrid ItemsSource="{Binding CurrentPlayer.Inventory}" AutoGenerateColumns="False"  HeadersVisibility="Column" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Description" Binding="{Binding Item.Name}" Width="*" />
                             <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="Auto" />
@@ -159,7 +159,7 @@
                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding CurrentPlayer.Weapons}" SelectedItem="{Binding CurrentWeapon}" DisplayMemberPath="Name" SelectedValuePath="Id" />
+                <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding CurrentPlayer.Weapons}" SelectedItem="{Binding CurrentPlayer.CurrentWeapon}" DisplayMemberPath="Name" SelectedValuePath="Id" />
                 <Button Grid.Row="0" Grid.Column="2" Content="Use" Click="OnAttack" />
             </Grid>
             
