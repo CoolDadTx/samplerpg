@@ -23,6 +23,8 @@ namespace SampleRpg.Engine.Factories
             CreateMiscellaneous(9004, "Rat fur", 2);
             CreateMiscellaneous(9005, "Spider fang", 1);
             CreateMiscellaneous(9006, "Spider silk", 2);
+
+            CreateHealing(2001, "Granola bar", 5, 1, 2);
         }
 
         public static GameItem NewItem ( int id )
@@ -33,6 +35,15 @@ namespace SampleRpg.Engine.Factories
         }
 
         //TODO: Should probably be using a builder here...
+        public static GameItem CreateHealing ( int id, string name, int price, int minHeal, int maxHeal )
+        {
+            var item = new GameItem(GameItemCategory.Consumable, id, name, price);
+            item.Action = new HealCommand(item, minHeal, maxHeal);
+
+            s_items.Add(item);
+            return item;
+        }
+
         public static GameItem CreateMiscellaneous ( int id, string name, int price )
         {
             var item = new GameItem(GameItemCategory.Miscellaneous, id, name, price);

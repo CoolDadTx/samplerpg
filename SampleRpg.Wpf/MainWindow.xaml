@@ -147,20 +147,27 @@
                 <ColumnDefinition Width="255" />
             </Grid.ColumnDefinitions>
 
-            <!-- Combat -->
-            <Grid Grid.Row="0" Grid.Column="0" Visibility="{Binding HasMonster, Converter={StaticResource BooleanToVisibility}}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!-- Middle grid -->
+            <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding CurrentPlayer.Weapons}" SelectedItem="{Binding CurrentPlayer.CurrentWeapon}" DisplayMemberPath="Name" SelectedValuePath="Id" />
-                <Button Grid.Row="0" Grid.Column="2" Content="Use" Click="OnAttack" />
+                <!-- Equipped -->
+                <TextBlock Grid.Row="0" Grid.Column="0">Right </TextBlock>
+                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding CurrentPlayer.Weapons}" SelectedItem="{Binding CurrentPlayer.CurrentWeapon}" DisplayMemberPath="Name" />
+                <Button Grid.Row="0" Grid.Column="2" Content="Attack " Click="OnAttack" Visibility="{Binding CanAttack, Converter={StaticResource BooleanToVisibility}}" />
+
+                <!-- Slots -->
+                <TextBlock Grid.Row="1" Grid.Column="0">Slot 1</TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding CurrentPlayer.Consumables}" SelectedItem="{Binding CurrentPlayer.Slot1}" DisplayMemberPath="Name" />
+                <Button Grid.Row="1" Grid.Column="2" Content="Use" Click="OnSlot1" Visibility="{Binding CurrentPlayer.Slot1HasItem, Converter={StaticResource BooleanToVisibility}}" />
             </Grid>
             
             <!-- Movement -->

@@ -6,5 +6,6 @@ namespace SampleRpg.Engine.Models
     {
         Miscellaneous,
         Weapon,
+        Consumable,
     }
 }

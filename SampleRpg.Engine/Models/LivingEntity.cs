@@ -18,6 +18,8 @@ namespace SampleRpg.Engine.Models
             Level = level;
         }
 
+        public event EventHandler WeaponEquipped;
+
         public event EventHandler Died;
 
         //TODO: Doesn't make sense to expose this from player...
@@ -63,6 +65,29 @@ namespace SampleRpg.Engine.Models
             }
         }
 
+        public GameItem Slot1
+        {
+            get => _slot1;
+            set {
+                if (_slot1 == value)
+                    return;
+
+                if (_slot1 != null)
+                    _slot1.Action.Executed -= OnActionPerformed;
+
+                _slot1 = value;
+                if (_slot1 != null)
+                    _slot1.Action.Executed += OnActionPerformed;
+
+                OnPropertyChanged(nameof(Slot1));
+                OnPropertyChanged(nameof(Slot1HasItem));
+            }
+        }
+
+        public bool Slot1HasItem => Slot1 != null;
+
+        public void UseSlot1 ( LivingEntity target ) => Slot1?.PerformAction(this, this);
+
         public GameItem CurrentWeapon
         {
             get => _weapon;
@@ -79,6 +104,7 @@ namespace SampleRpg.Engine.Models
                     _weapon.Action.Executed += OnActionPerformed;
 
                 OnPropertyChanged(nameof(CurrentWeapon));
+                WeaponEquipped?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -139,7 +165,16 @@ namespace SampleRpg.Engine.Models
 
             existing.Quantity -= count;
             if (existing.Quantity <= 0)
+            {                
                 Inventory.Remove(existing);
+
+                //HACK: Unequip first - does not work properly if multipe available
+                if (Slot1HasItem && Slot1.Id == id)
+                {
+                    Slot1 = null;
+                    OnPropertyChanged(nameof(Consumables));
+                };
+            };
 
             if (existing.Item.IsWeapon())
                 OnPropertyChanged(nameof(Weapons));
@@ -159,12 +194,15 @@ namespace SampleRpg.Engine.Models
         }
 
         //TODO: Why are we using List<T> here?
+        public IEnumerable<GameItem> Consumables => Inventory.Where(i => i.Item.Category == GameItemCategory.Consumable).Select(i => i.Item);
+        public bool HasConsumables => Inventory.Any(i => i.Item.Category == GameItemCategory.Consumable);
+
         public IEnumerable<GameItem> Weapons => Inventory.Where(i => i.Item.IsWeapon()).Select(i => i.Item);
 
         //TODO: Shouldn't this be part of HP property instead, what do we really gain here?                
         public void Heal ( int hitPoints )
         {
-            CurrentHitPoints = Math.Max(CurrentHitPoints + hitPoints, MaximumHitPoints);
+            CurrentHitPoints = Math.Min(CurrentHitPoints + hitPoints, MaximumHitPoints);
         }
 
         public void HealAll () => CurrentHitPoints = MaximumHitPoints;
@@ -203,6 +241,7 @@ namespace SampleRpg.Engine.Models
         private int _level;
 
         private GameItem _weapon;
+        private GameItem _slot1;
         #endregion
     }
 }

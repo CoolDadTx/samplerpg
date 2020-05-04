@@ -46,8 +46,10 @@ namespace SampleRpg.Wpf
             GameMessages.Document.Blocks.Add(new Paragraph(new Run(e.Message)));
             GameMessages.ScrollToEnd();
         }
-
+        
         private void OnAttack ( object sender, RoutedEventArgs e ) => _session.Attack();
+
+        private void OnSlot1 ( object sender, RoutedEventArgs e ) => _session.UseSlot1();
 
         #region Private Members
 

@@ -13,7 +13,7 @@ namespace SampleRpg.Engine.Models
         {
             RewardXP = xp;
 
-            ImageName = (imageName ?? name).RemoveAll(' ').ToLower() + ".png";
+            ImageName = (imageName ?? name).RemoveAll(' ').ToLower();
         }
 
         public string ImageName { get; private set; }

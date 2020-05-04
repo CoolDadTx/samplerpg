@@ -15,7 +15,8 @@ namespace SampleRpg.Engine.ViewModels
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
             
             CurrentPlayer = new Player("Test", "Fighter", 10, gold: 1000);            
-            CurrentPlayer.AddToInventory(ItemFactory.NewItem(1001));                        
+            CurrentPlayer.AddToInventory(ItemFactory.NewItem(1001));
+            CurrentPlayer.AddToInventory(ItemFactory.NewItem(2001));
         }
 
         public event EventHandler<GameMessageEventArgs> MessageRaised;
@@ -81,11 +82,11 @@ namespace SampleRpg.Engine.ViewModels
                     };
 
                     OnPropertyChanged(nameof(CurrentMonster));
-                    OnPropertyChanged(nameof(HasMonster));
+                    OnPropertyChanged(nameof(CanAttack));
                 };
             }
         }
-        public bool HasMonster => CurrentMonster != null;
+        public bool CanAttack => CurrentMonster != null && CurrentPlayer.CurrentWeapon != null;
 
         public World CurrentWorld { get; set; } = WorldFactory.CreateWorld();
         public Trader CurrentTrader 
@@ -107,6 +108,8 @@ namespace SampleRpg.Engine.ViewModels
         public bool CanMoveEast => CurrentWorld.GetLocationToEast(CurrentLocation) != null;
         public bool CanMoveWest => CurrentWorld.GetLocationToWest(CurrentLocation) != null;
 
+        public void UseSlot1 () => CurrentPlayer?.UseSlot1(CurrentPlayer);
+        
         //TODO: Should this be elsewhere?
         public void Attack ()
         {
@@ -234,11 +237,13 @@ namespace SampleRpg.Engine.ViewModels
 
             if (subscribe)
             {
+                player.WeaponEquipped += OnPlayerWeaponEquipped;
                 player.Died += OnPlayerDied;
                 player.LeveledUp += OnPlayerLevelUp;
                 player.ActionPerformed += OnPlayerActionPerformed;
             } else
             {
+                player.WeaponEquipped -= OnPlayerWeaponEquipped;
                 player.Died -= OnPlayerDied;
                 player.LeveledUp -= OnPlayerLevelUp;
                 player.ActionPerformed -= OnPlayerActionPerformed;
@@ -283,6 +288,11 @@ namespace SampleRpg.Engine.ViewModels
         }
 
         private void OnPlayerActionPerformed ( object sender, string message ) => OnMessageRaised(message);
+
+        private void OnPlayerWeaponEquipped ( object sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(CanAttack));
+        }
 
         private void OnPlayerDied ( object sender, EventArgs e )
         {
