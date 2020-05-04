@@ -63,30 +63,29 @@ namespace SampleRpg.Engine.ViewModels
             }
         }
 
-        public Monster CurrentEncounter
+        public Monster CurrentMonster
         {
             get => _monster;
             set 
             {
                 if (_monster != value)
                 {
-                    if (_monster != null)
-                        _monster.Died -= OnMonsterDied;
+                    HandleEvents(_monster, false);
 
                     _monster = value;
 
                     if (_monster != null)
                     {
-                        _monster.Died += OnMonsterDied;
-                        OnMessageRaised($"You see a {CurrentEncounter.Name} here!");
+                        HandleEvents(_monster, true);
+                        OnMessageRaised($"You see a {CurrentMonster.Name} here!");
                     };
 
-                    OnPropertyChanged(nameof(CurrentEncounter));
-                    OnPropertyChanged(nameof(HasEncounter));
+                    OnPropertyChanged(nameof(CurrentMonster));
+                    OnPropertyChanged(nameof(HasMonster));
                 };
             }
         }
-        public bool HasEncounter => CurrentEncounter != null;
+        public bool HasMonster => CurrentMonster != null;
 
         public World CurrentWorld { get; set; } = WorldFactory.CreateWorld();
         public Trader CurrentTrader 
@@ -118,7 +117,7 @@ namespace SampleRpg.Engine.ViewModels
                 return;
             };
 
-            var target = CurrentEncounter;
+            var target = CurrentMonster;
 
             CurrentPlayer.UseCurrentWeapon(target);
 
@@ -126,10 +125,10 @@ namespace SampleRpg.Engine.ViewModels
             {              
                 //TODO: Why? - clear encounter otherwise can keep attacking
                 //CurrentLocation.GetEncounter();
-                CurrentEncounter = null;
+                CurrentMonster = null;
             } else
             {
-                AttackPlayer(target);                
+                CurrentMonster.UseCurrentWeapon(CurrentPlayer);              
             };
         }
 
@@ -174,22 +173,7 @@ namespace SampleRpg.Engine.ViewModels
         //TODO: Make this a behavior of Location
         private void CheckForEncounters ()
         {                     
-            CurrentEncounter = CurrentLocation.GetEncounter();
-        }
-
-        private void AttackPlayer ( Monster monster )
-        {
-            //TODO: How can monster miss based solely on damage?
-            var dmg = Rng.Between(monster.MinimumDamage, monster.MaximumDamage);
-            if (dmg <= 0)
-            {
-                OnMessageRaised("Monster misses");
-                return;
-            } else
-            {
-                OnMessageRaised($"You were hit for {dmg} points of damage");
-                CurrentPlayer.TakeDamage(dmg);                
-            };
+            CurrentMonster = CurrentLocation.GetEncounter();
         }
 
         //TODO: Doesn't belong here
@@ -260,10 +244,28 @@ namespace SampleRpg.Engine.ViewModels
                 player.ActionPerformed -= OnPlayerActionPerformed;
             };
         }
-        
+
+        private void HandleEvents ( Monster monster, bool subscribe )
+        {
+            if (monster == null)
+                return;
+
+            if (subscribe)
+            {
+                monster.Died += OnMonsterDied;
+                monster.ActionPerformed += OnMonsterActionPerformed;
+            } else
+            {
+                monster.Died -= OnMonsterDied;
+                monster.ActionPerformed -= OnMonsterActionPerformed;
+            };
+        }
+
+        private void OnMonsterActionPerformed ( object sender, string message ) => OnMessageRaised(message);
+
         private void OnMonsterDied ( object sender, EventArgs e )
         {
-            var monster = CurrentEncounter;
+            var monster = CurrentMonster;
 
             OnMessageRaised($"You killed {monster.Name}");
 

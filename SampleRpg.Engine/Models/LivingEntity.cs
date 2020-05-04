@@ -72,11 +72,11 @@ namespace SampleRpg.Engine.Models
                     return;
 
                 if (_weapon != null)
-                    _weapon.AttackCommand.Executed -= OnActionPerformed;
+                    _weapon.Action.Executed -= OnActionPerformed;
 
                 _weapon = value;
                 if (_weapon != null)
-                    _weapon.AttackCommand.Executed += OnActionPerformed;
+                    _weapon.Action.Executed += OnActionPerformed;
 
                 OnPropertyChanged(nameof(CurrentWeapon));
             }

@@ -103,12 +103,12 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" HorizontalAlignment="Center" Height="Auto" Text="{Binding CurrentEncounter.Name}" />
-                    <Image Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="125" Width="125" Source="{Binding CurrentEncounter.ImagePath}" />
+                    <TextBlock Grid.Row="0" HorizontalAlignment="Center" Height="Auto" Text="{Binding CurrentMonster.Name}" />
+                    <Image Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="125" Width="125" Source="{Binding CurrentMonster.ImagePath}" />
 
-                    <StackPanel Grid.Row="2" Visibility="{Binding HasEncounter, Converter={StaticResource BooleanToVisibility}}">
+                    <StackPanel Grid.Row="2" Visibility="{Binding HasMonster, Converter={StaticResource BooleanToVisibility}}">
                         <TextBlock>Current Hit Points: </TextBlock>
-                        <TextBlock Text="{Binding CurrentEncounter.CurrentHitPoints}" />
+                        <TextBlock Text="{Binding CurrentMonster.CurrentHitPoints}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -148,7 +148,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Combat -->
-            <Grid Grid.Row="0" Grid.Column="0" Visibility="{Binding HasEncounter, Converter={StaticResource BooleanToVisibility}}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Grid.Row="0" Grid.Column="0" Visibility="{Binding HasMonster, Converter={StaticResource BooleanToVisibility}}" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />

@@ -6,7 +6,7 @@ using SampleRpg.Engine.Models;
 
 namespace SampleRpg.Engine.Actions
 {
-    public class WeaponAttackCommand
+    public class WeaponAttackCommand : IAction
     {
         #region Construction
 
@@ -28,12 +28,15 @@ namespace SampleRpg.Engine.Actions
 
         public void Execute ( LivingEntity source, LivingEntity target )
         {
+            var sourceName = (source is Player) ? "You" : $"The {source.Name}";
+            var targetName = (target is Player) ? "You" : $"The {target.Name}";
+
             var dmg = Rng.Between(_minDmg, _maxDmg);
             if (dmg == 0)
-                RaiseExecuted("You missed");
+                RaiseExecuted($"{sourceName} missed");
             else
             {
-                RaiseExecuted($"You hit for {dmg} damage");
+                RaiseExecuted($"{sourceName} hit {targetName} for {dmg} damage");
                 target.TakeDamage(dmg);
             };
         }

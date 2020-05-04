@@ -13,7 +13,11 @@ namespace SampleRpg.Engine.Factories
             CreateWeapon(1001, "Pointy Stick", 1, 1, 2);
             CreateWeapon(1002, "Rusty Sword", 5, 1, 3);
 
-            CreateMiscellaneous(9001, "Snake Fang", 5);
+            CreateWeapon(1501, "Snake fangs", 0, 0, 2);
+            CreateWeapon(1502, "Rat claws", 0, 0, 2);
+            CreateWeapon(1503, "Spider fangs", 0, 0, 4);
+
+            CreateMiscellaneous(9001, "Snake Fang", 1);
             CreateMiscellaneous(9002, "Snakeskin", 2);
             CreateMiscellaneous(9003, "Rat tail", 1);
             CreateMiscellaneous(9004, "Rat fur", 2);
@@ -41,7 +45,7 @@ namespace SampleRpg.Engine.Factories
         public static GameItem CreateWeapon ( int id, string name, int price, int minDamage, int maxDamage )
         {
             var weapon = new GameItem(GameItemCategory.Weapon, id, name, price, true);
-            weapon.AttackCommand = new WeaponAttackCommand(weapon, minDamage, maxDamage);
+            weapon.Action = new WeaponAttackCommand(weapon, minDamage, maxDamage);
 
             s_items.Add(weapon);
             return weapon;

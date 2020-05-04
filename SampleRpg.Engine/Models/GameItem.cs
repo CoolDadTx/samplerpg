@@ -10,7 +10,7 @@ namespace SampleRpg.Engine.Models
 
         //TODO: Should use a builder - unrealistic to have all this in a single constructor, maybe a simpler dictionary-based set of properties?
         //TODO: This doesn't make sense to have a command passed that is specific to a weapon, maybe generalize to "Use"??
-        public GameItem ( GameItemCategory category, int id, string name, int price, bool isUnique = false, WeaponAttackCommand attackCommand = null )
+        public GameItem ( GameItemCategory category, int id, string name, int price, bool isUnique = false, IAction action = null )
         {
             Category = category;
             Id = id;
@@ -18,7 +18,7 @@ namespace SampleRpg.Engine.Models
             Price = price;
             IsUnique = isUnique;
 
-            AttackCommand = attackCommand;
+            Action = action;
         }
         #endregion
 
@@ -27,7 +27,7 @@ namespace SampleRpg.Engine.Models
         //TODO: Could it be multiple?
         public GameItemCategory Category { get; }
 
-        public WeaponAttackCommand AttackCommand { get; set; }
+        public IAction Action { get; set; }
 
         public string Name { get; protected set; }
 
@@ -37,10 +37,10 @@ namespace SampleRpg.Engine.Models
 
         public virtual GameItem Clone ( bool deepClone )
         {
-            return new GameItem(Category, Id, Name, Price, IsUnique, AttackCommand);
+            return new GameItem(Category, Id, Name, Price, IsUnique, Action);
         }
 
         //TODO: This doesn't make sense - only weapons should expose commands for this and params may differ
-        public void PerformAction ( LivingEntity source, LivingEntity target ) => AttackCommand.Execute(source, target);        
+        public void PerformAction ( LivingEntity source, LivingEntity target ) => Action.Execute(source, target);        
     }
 }
