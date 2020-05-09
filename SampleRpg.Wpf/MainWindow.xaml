@@ -114,7 +114,7 @@
             </Border>
         </Grid>
         
-        <!-- Inventory and quests -->
+        <!-- Tabs -->
         <Grid Grid.Row="2" Grid.Column="0" Background="BurlyWood">
             <TabControl>
                 <TabItem Header="Inventory">
@@ -127,10 +127,17 @@
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="Quests">
-                    <DataGrid ItemsSource="{Binding CurrentPlayer.Quests}" AutoGenerateColumns="False"  HeadersVisibility="Column">
+                    <DataGrid ItemsSource="{Binding CurrentPlayer.Quests}" AutoGenerateColumns="False"  HeadersVisibility="Column" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Quest.Name}" Width="*" />
                             <DataGridTextColumn Header="Done?" Binding="{Binding IsCompleted}" Width="Auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Recipes">
+                    <DataGrid ItemsSource="{Binding CurrentPlayer.Recipes}" AutoGenerateColumns="False"  HeadersVisibility="Column" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

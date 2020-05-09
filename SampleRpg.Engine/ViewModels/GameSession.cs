@@ -20,6 +20,7 @@ namespace SampleRpg.Engine.ViewModels
             CurrentPlayer = new Player("Test", "Fighter", 10, gold: 1000);            
             CurrentPlayer.AddToInventory(ItemFactory.NewItem(1001));
             CurrentPlayer.AddToInventory(ItemFactory.NewItem(2001));
+            CurrentPlayer.LearnRecipe(RecipeFactory.GetRecipe(1));
         }
 
         public event EventHandler<GameMessageEventArgs> MessageRaised;

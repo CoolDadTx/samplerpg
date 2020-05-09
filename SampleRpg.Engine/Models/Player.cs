@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace SampleRpg.Engine.Models
 {
@@ -45,8 +46,17 @@ namespace SampleRpg.Engine.Models
         }
 
         //TODO: Consider moving completed quests into separate list so we don't go through them again
-        public ObservableCollection<QuestStatus> Quests { get; } = new ObservableCollection<QuestStatus>();         
-        
+        public ObservableCollection<QuestStatus> Quests { get; } = new ObservableCollection<QuestStatus>();
+
+        //
+        //Recipes
+        public ObservableCollection<Recipe> Recipes { get; } = new ObservableCollection<Recipe>();
+
+        public void LearnRecipe ( Recipe recipe )
+        {
+            if (!Recipes.Any(r => r.Id == recipe.Id))
+                Recipes.Add(recipe);
+        }
         #region Private Members        
         
         private void CheckForLevelUp ()

@@ -25,6 +25,9 @@ namespace SampleRpg.Engine.Factories
             CreateMiscellaneous(9006, "Spider silk", 2);
 
             CreateHealing(2001, "Granola bar", 5, 1, 2);
+            CreateMiscellaneous(3001, "Oats", 1);
+            CreateMiscellaneous(3002, "Honey", 2);
+            CreateMiscellaneous(3003, "Raisins", 2);
         }
 
         public static GameItem NewItem ( int id )
