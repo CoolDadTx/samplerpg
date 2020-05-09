@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using SampleRpg.Engine.Actions;
 
 namespace SampleRpg.Engine.Models
 {
@@ -229,7 +230,7 @@ namespace SampleRpg.Engine.Models
 
         #region Private Members
 
-        private void OnActionPerformed ( object sender, string message ) => ActionPerformed?.Invoke(this, message);
+        private void OnActionPerformed ( object sender, ActionCommandEventArgs e ) => ActionPerformed?.Invoke(this, e.Message);
 
         private InventoryItem FindInventoryItem ( int id ) => Inventory.FirstOrDefault(x => x.Item.Id == id);
 

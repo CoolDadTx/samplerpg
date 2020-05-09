@@ -6,7 +6,7 @@ using SampleRpg.Engine.Models;
 
 namespace SampleRpg.Engine.Actions
 {
-    public class HealCommand : IAction
+    public class HealCommand : ActionCommand
     {
         #region Construction
 
@@ -23,15 +23,12 @@ namespace SampleRpg.Engine.Actions
         }
         #endregion
 
-        //TODO: How useful is a string response. Is an event even needed here?
-        public event EventHandler<string> Executed;
-
-        public void Execute ( LivingEntity source, LivingEntity target )
+        protected override void ExecuteCore ( LivingEntity source, LivingEntity target )
         {
             var targetName = (target is Player) ? "You are" : $"The {target.Name} is";
 
             var hp = Rng.Between(_minHeal, _maxHeal);
-            RaiseExecuted($"{targetName} healed for {hp} points");
+            OnExecuted(new ActionCommandEventArgs($"{targetName} healed for {hp} points"));
             target.Heal(hp);
 
             //One use item
@@ -39,8 +36,6 @@ namespace SampleRpg.Engine.Actions
         }
 
         #region Private Members
-
-        private void RaiseExecuted ( string result ) => Executed?.Invoke(this, result);
 
         private readonly GameItem _item;
         private readonly int _minHeal, _maxHeal;

@@ -6,7 +6,7 @@ using SampleRpg.Engine.Models;
 
 namespace SampleRpg.Engine.Actions
 {
-    public class WeaponAttackCommand : IAction
+    public class WeaponAttackCommand : ActionCommand
     {
         #region Construction
 
@@ -23,27 +23,22 @@ namespace SampleRpg.Engine.Actions
         }
         #endregion
 
-        //TODO: How useful is a string response. Is an event even needed here?
-        public event EventHandler<string> Executed;
-
-        public void Execute ( LivingEntity source, LivingEntity target )
+        protected override void ExecuteCore ( LivingEntity source, LivingEntity target )
         {
             var sourceName = (source is Player) ? "You" : $"The {source.Name}";
             var targetName = (target is Player) ? "You" : $"The {target.Name}";
-
+                        
             var dmg = Rng.Between(_minDmg, _maxDmg);
             if (dmg == 0)
-                RaiseExecuted($"{sourceName} missed");
+                OnExecuted(new ActionCommandEventArgs($"{sourceName} missed"));
             else
             {
-                RaiseExecuted($"{sourceName} hit {targetName} for {dmg} damage");
+                OnExecuted(new ActionCommandEventArgs($"{sourceName} hit {targetName} for {dmg} damage"));
                 target.TakeDamage(dmg);
             };
         }
 
         #region Private Members
-
-        private void RaiseExecuted ( string result ) => Executed?.Invoke(this, result);
 
         private readonly GameItem _weapon;
         private readonly int _minDmg, _maxDmg;
