@@ -6,7 +6,8 @@
         xmlns:vm="clr-namespace:SampleRpg.Engine.ViewModels;assembly=SampleRpg.Engine"
         d:DataContext="{d:DesignInstance vm:GameSession}"
         mc:Ignorable="d" FontSize="11pt"
-        Title="Sample RPG" Height="768" Width="1024">    
+        Title="Sample RPG" Height="768" Width="1024"
+        KeyDown="Window_KeyDown">    
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
     </Window.Resources>

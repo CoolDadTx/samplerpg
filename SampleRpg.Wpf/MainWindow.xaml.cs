@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 using SampleRpg.Engine.Eventing;
 using SampleRpg.Engine.ViewModels;
 
@@ -16,6 +18,8 @@ namespace SampleRpg.Wpf
         public MainWindow ()
         {
             InitializeComponent();
+
+            InitializeBindings();
 
             //TODO: Do this via bindings
             _session.MessageRaised += OnMessageRaised;
@@ -51,10 +55,29 @@ namespace SampleRpg.Wpf
 
         private void OnSlot1 ( object sender, RoutedEventArgs e ) => _session.UseSlot1();
 
+        private void Window_KeyDown ( object sender, KeyEventArgs e )
+        {
+            if (_keyBindings.TryGetValue(e.Key, out var action))
+                action();
+        }
+
         #region Private Members
 
+        private void InitializeBindings ()
+        {
+            _keyBindings.Add(Key.W, () => _session.MoveNorth());
+            _keyBindings.Add(Key.A, () => _session.MoveWest());
+            _keyBindings.Add(Key.S, () => _session.MoveSouth());
+            _keyBindings.Add(Key.D, () => _session.MoveEast());
+
+            _keyBindings.Add(Key.Z, () => _session.Attack());
+            _keyBindings.Add(Key.D1, () => _session.UseSlot1());
+        }
+
         private readonly GameSession _session = new GameSession();
-            
-        #endregion
+
+        private readonly Dictionary<Key, Action> _keyBindings = new Dictionary<Key, Action>();
+           
+        #endregion        
     }
 }

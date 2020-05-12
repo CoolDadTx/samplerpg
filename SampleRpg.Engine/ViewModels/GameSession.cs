@@ -117,6 +117,9 @@ namespace SampleRpg.Engine.ViewModels
         //TODO: Should this be elsewhere?
         public void Attack ()
         {
+            if (CurrentMonster == null)
+                return;
+
             //TODO: Implement a combat round loop - initiative, attacks, apply effects, etc
             if (CurrentPlayer.CurrentWeapon == null)
             {
