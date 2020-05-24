@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using SampleRpg.Engine.Eventing;
+using SampleRpg.Engine.Models;
 using SampleRpg.Engine.ViewModels;
 
 namespace SampleRpg.Wpf
@@ -37,6 +40,9 @@ namespace SampleRpg.Wpf
 
         private void OnTrade ( object sender, RoutedEventArgs e )
         {
+            if (_session.CurrentTrader == null)
+                return;
+
             var child = new TradeWindow() {
                 Owner = this,
                 DataContext = _session
@@ -53,6 +59,12 @@ namespace SampleRpg.Wpf
         
         private void OnAttack ( object sender, RoutedEventArgs e ) => _session.Attack();
 
+        private void OnCraft ( object sender, RoutedEventArgs e )
+        {
+            var recipe = ((FrameworkElement)sender).DataContext as Recipe;
+            _session.CraftItem(recipe);
+        }
+
         private void OnSlot1 ( object sender, RoutedEventArgs e ) => _session.UseSlot1();
 
         private void Window_KeyDown ( object sender, KeyEventArgs e )
@@ -63,6 +75,18 @@ namespace SampleRpg.Wpf
 
         #region Private Members
 
+        private void FocusTab ( string name )
+        {
+            foreach (var tab in PlayerDataTabControl.Items.OfType<TabItem>())
+            {
+                if (String.Compare(tab.Name, name, true) == 0)
+                {
+                    tab.IsSelected = true;
+                    return;                         
+                };
+            };
+        }
+
         private void InitializeBindings ()
         {
             _keyBindings.Add(Key.W, () => _session.MoveNorth());
@@ -72,6 +96,11 @@ namespace SampleRpg.Wpf
 
             _keyBindings.Add(Key.Z, () => _session.Attack());
             _keyBindings.Add(Key.D1, () => _session.UseSlot1());
+
+            _keyBindings.Add(Key.I, () => FocusTab("InventoryTab"));
+            _keyBindings.Add(Key.J, () => FocusTab("QuestsTab"));
+            _keyBindings.Add(Key.R, () => FocusTab("RecipesTab"));
+            _keyBindings.Add(Key.T, () => OnTrade(this, new RoutedEventArgs()));
         }
 
         private readonly GameSession _session = new GameSession();

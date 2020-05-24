@@ -112,6 +112,29 @@ namespace SampleRpg.Engine.ViewModels
         public bool CanMoveEast => CurrentWorld.GetLocationToEast(CurrentLocation) != null;
         public bool CanMoveWest => CurrentWorld.GetLocationToWest(CurrentLocation) != null;
 
+        public void CraftItem ( Recipe recipe )
+        {
+            if (CurrentPlayer.HasAllItems(recipe.Ingredients))
+            {
+                CurrentPlayer.RemoveItemsFromInventory(recipe.Ingredients);
+                foreach (var output in recipe.Outputs)
+                {
+                    var item = ItemFactory.NewItem(output.ItemId);
+                    CurrentPlayer.AddToInventory(item, output.Quantity);
+                    OnMessageRaised($"You crafted {output.Quantity} {item.Name}");
+                };
+            } else
+            {
+                OnMessageRaised("You do not have the required ingredients.");
+                foreach (var ingredient in recipe.Ingredients)
+                {
+                    var name = ItemFactory.GetItemName(ingredient.ItemId);
+                    var own = Math.Min(ingredient.Quantity, CurrentPlayer.Inventory.Where(i => i.Item.Id == ingredient.ItemId).SumOrZero(i => i.Quantity));
+                    OnMessageRaised($"{name} {own}/{ingredient.Quantity}");
+                };
+            };
+        }
+
         public void UseSlot1 () => CurrentPlayer?.UseSlot1(CurrentPlayer);
         
         //TODO: Should this be elsewhere?

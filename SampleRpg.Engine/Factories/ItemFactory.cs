@@ -30,6 +30,8 @@ namespace SampleRpg.Engine.Factories
             CreateMiscellaneous(3003, "Raisins", 2);
         }
 
+        public static string GetItemName ( int id ) => s_items.FirstOrDefault(i => i.Id == id)?.Name ?? "";
+        
         public static GameItem NewItem ( int id )
         {
             var item = s_items.FirstOrDefault(i => i.Id == id);
