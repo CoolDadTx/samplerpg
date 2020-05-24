@@ -1,0 +1,107 @@
+﻿[
+  {
+    "category": "weapon",
+    "id": 1001,
+    "name": "Pointy Stick",
+    "price": 1,
+    "minimumDamage": 1,
+    "maximumDamage": 2
+  },
+  {
+    "category": "weapon",
+    "id": 1002,
+    "name": "Rusty Sword",
+    "price": 5,
+    "minimumDamage": 1,
+    "maximumDamage": 3
+  },
+  {
+    "category": "weapon",
+    "id": 1501,
+    "name": "Snake Fang",
+    "price": 0,
+    "minimumDamage": 0,
+    "maximumDamage": 2
+  },
+  {
+    "category": "weapon",
+    "id": 1502,
+    "name": "Rat Claw",
+    "price": 0,
+    "minimumDamage": 0,
+    "maximumDamage": 2
+  },
+  {
+    "category": "weapon",
+    "id": 1503,
+    "name": "Spider Fang",
+    "price": 0,
+    "minimumDamage": 0,
+    "maximumDamage": 4
+  },
+
+  {
+    "category": "healing",
+    "id": 2001,
+    "name": "Granola Bar",
+    "price": 5,
+    "minimumHeal": 1,
+    "maximumHeal": 5
+  },
+
+  {
+    "category": "other",
+    "id": 3001,
+    "name": "Oats",
+    "price": 1
+  },
+  {
+    "category": "other",
+    "id": 3002,
+    "name": "Honey",
+    "price": 2
+  },
+  {
+    "category": "other",
+    "id": 3003,
+    "name": "Raisins",
+    "price": 2
+  },
+  {
+    "category": "other",
+    "id": 9001,
+    "name": "Snake Fang",
+    "price": 1
+  },
+  {
+    "category": "other",
+    "id": 9002,
+    "name": "Snakesin",
+    "price": 2
+  },
+  {
+    "category": "other",
+    "id": 9003,
+    "name": "Rat Tail",
+    "price": 1
+  },
+  {
+    "category": "other",
+    "id": 9004,
+    "name": "Rat Fur",
+    "price": 2
+  },
+  {
+    "category": "other",
+    "id": 9005,
+    "name": "Spider Fang",
+    "price": 1
+  },
+  {
+    "category": "other",
+    "id": 9006,
+    "name": "Spider Silk",
+    "price": 2
+  }
+
+]

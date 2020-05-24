@@ -195,8 +195,8 @@ namespace SampleRpg.Engine.Models
         }
 
         //TODO: Why are we using List<T> here?
-        public IEnumerable<GameItem> Consumables => Inventory.Where(i => i.Item.Category == GameItemCategory.Consumable).Select(i => i.Item);
-        public bool HasConsumables => Inventory.Any(i => i.Item.Category == GameItemCategory.Consumable);
+        public IEnumerable<GameItem> Consumables => Inventory.Where(i => i.Item.Category == GameItemCategory.Healing).Select(i => i.Item);
+        public bool HasConsumables => Inventory.Any(i => i.Item.Category == GameItemCategory.Healing);
 
         public IEnumerable<GameItem> Weapons => Inventory.Where(i => i.Item.IsWeapon()).Select(i => i.Item);
 

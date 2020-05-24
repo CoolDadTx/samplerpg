@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="P3Net.Kraken" Version="6.0.0" />
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
   </ItemGroup>
 
 </Project>
