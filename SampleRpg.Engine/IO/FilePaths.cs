@@ -5,8 +5,6 @@ namespace SampleRpg.Engine.IO
 {
     public static class FilePaths
     {
-        public static bool FileExists ( string filePath ) => File.Exists(filePath);
-
-        public static string GetDataFilePath ( string relativePath ) => Path.Combine("data", relativePath);            
+        public static string NormalizePath ( string value ) => !String.IsNullOrEmpty(value) ? value.Replace('/', Path.DirectorySeparatorChar).Trim() : value;
     }
 }

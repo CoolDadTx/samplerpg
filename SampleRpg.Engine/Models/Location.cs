@@ -19,7 +19,7 @@ namespace SampleRpg.Engine.Models
             YCoordinate = y;
             Name = name;
             Description = description ?? name;
-            ImageName = (imageName ?? name).RemoveAll(' ');
+            ImagePath = (imageName ?? name).RemoveAll(' ');
         }
         #endregion
 
@@ -29,9 +29,7 @@ namespace SampleRpg.Engine.Models
         public string Name { get; }
         public string Description { get; }
 
-        public string ImageName { get; }
-
-        public string ImagePath => $"pack://application:,,,/Resources/Images/Locations/{ImageName}";
+        public string ImagePath { get; set; }
 
         public Trader TraderHere { get; set; }
 

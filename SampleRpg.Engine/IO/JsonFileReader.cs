@@ -1,31 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 
 namespace SampleRpg.Engine.IO
 {
-    public class DataFileReader
+    public class JsonFileReader
     {
-        public DataFileReader ( string filename )
+        public JsonFileReader ( string filename )
         {
-            _filename = filename;                 
+            _filename = filename;                            
         }
 
-        public T Read<T> ()
+        public IEnumerable<T> ReadArray<T> ( )
         {
-            var json = File.ReadAllText(_filename);
+            if (File.Exists(_filename))
+            {
+                var json = File.ReadAllText(_filename);
+                var results = JsonSerializer.Deserialize<IEnumerable<T>>(json, _options);
 
-            return JsonSerializer.Deserialize<T>(json, _options);
-        }
+                return results ?? Enumerable.Empty<T>();
+            } else
+                Trace.TraceWarning($"File '{_filename}' not found");
 
-        public IEnumerable<T> ReadAll<T> ( )
-        {
-            var json = File.ReadAllText(_filename);
-            var results = JsonSerializer.Deserialize<IEnumerable<T>>(json, _options);
-
-            return results ?? Enumerable.Empty<T>();
+            return Enumerable.Empty<T>();
         }
 
         #region Private Members

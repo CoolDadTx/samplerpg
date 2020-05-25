@@ -1,0 +1,91 @@
+﻿[
+  {
+    "name": "Farmer's Field",
+    "x": -2,
+    "y": -1,
+    "image": "locations/farmfields.png",
+    "description": "Rows of corn",
+    "monsters": [
+      {
+        "id": 2,
+        "chance": 50
+      }
+    ]
+  },
+  {
+    "name": "Farmer's House",
+    "x": -1,
+    "y": -1,
+    "image": "locations/farmhouse.png",
+    "description": "Neighbor's house",
+    "trader": "Farmer Ted"
+  },
+  {
+    "name": "Home",
+    "x": 0,
+    "y": -1,
+    "image": "locations/home.png",
+    "description": "My house"
+  },
+  {
+    "name": "Trading Shop",
+    "x": -1,
+    "y": 0,
+    "image": "locations/trader.png",
+    "description": "Shop to buy stuff",
+    "trader": "Susan"    
+  },
+  {
+    "name": "Town Square",
+    "x": 0,
+    "y": 0,
+    "image": "locations/townsquare.png",
+    "description": "Center of town"
+  },
+  {
+    "name": "Town Gate",
+    "x": 1,
+    "y": 0,
+    "image": "locations/towngate.png",
+    "description": "Gate out of town"
+  },
+  {
+    "name": "Spider Forest",
+    "x": 2,
+    "y": 0,
+    "image": "locations/spiderforest.png",
+    "description": "Spiders live here",
+    "monsters": [
+      {
+        "id": 3,
+        "chance": 90
+      }
+    ]
+  },
+  {
+    "name": "Herbalist's Hut",
+    "x": 0,
+    "y": 1,
+    "image": "locations/herbalistshut.png",
+    "description": "Small hut of herbs",
+    "trader": "Pete the Herbalist",
+    "quests": [
+      {
+        "id": 1
+      }
+    ]
+  },
+  {
+    "name": "Herbalist's Garden",
+    "x": 0,
+    "y": 2,
+    "image": "locations/herbalistsgarden.png",
+    "description": "Garden of herbalist",
+    "monsters": [
+      {
+        "id": 1,
+        "chance": 100
+      }
+    ]
+  }
+]
