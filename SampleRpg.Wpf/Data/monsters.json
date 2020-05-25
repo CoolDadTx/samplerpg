@@ -1,0 +1,59 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Snake",
+    "hp": 4,
+    "xp": 5,
+    "image": "monsters/snake.png",
+    "gold": 1,
+    "loot": [
+      {
+        "id": 9001,
+        "chance": 25
+      },
+      {
+        "id": 9002,
+        "chance": 75
+      }
+    ],
+    "weapon": 1501
+  },
+  {
+    "id": 2,
+    "name": "Rat",
+    "hp": 5,
+    "xp": 5,
+    "image": "monsters/rat.png",
+    "gold": 1,
+    "loot": [
+      {
+        "id": 9003,
+        "chance": 25
+      },
+      {
+        "id": 9004,
+        "chance": 75
+      }
+    ],
+    "weapon": 1502
+  },
+  {
+    "id": 3,
+    "name": "Giant Spider",
+    "hp": 10,
+    "xp": 10,
+    "image": "monsters/giantspider.png",
+    "gold": 3,
+    "loot": [
+      {
+        "id": 9005,
+        "chance": 25
+      },
+      {
+        "id": 9006,
+        "chance": 75
+      }
+    ],
+    "weapon": 1503
+  }
+]

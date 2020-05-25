@@ -10,9 +10,6 @@ namespace SampleRpg.Engine.ViewModels
 {    
     public class GameSession : NotifyPropertyChangedObject
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public GameSession ()
         {
             CurrentLocation = CurrentWorld.LocationAt(0, 0);

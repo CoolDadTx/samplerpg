@@ -35,11 +35,11 @@ namespace SampleRpg.Engine.Models
 
         public Location AddEncounter ( int monsterId, int percentage )
         {
-            var existing = Encounters.FirstOrDefault(x => x.MonsterId == monsterId);
+            var existing = Encounters.FirstOrDefault(x => x.Id == monsterId);
             if (existing != null)
                 existing.Percentage = percentage;
             else
-                Encounters.Add(new Encounter() { MonsterId = monsterId, Percentage = percentage });
+                Encounters.Add(new IdPercentage() { Id = monsterId, Percentage = percentage });
 
             return this;
         }
@@ -67,7 +67,7 @@ namespace SampleRpg.Engine.Models
             {
                 total += encounter.Percentage;
                 if (result <= total)
-                    return MonsterFactory.Get(encounter.MonsterId);
+                    return MonsterFactory.Get(encounter.Id);
             };
 
             return null;
@@ -76,7 +76,7 @@ namespace SampleRpg.Engine.Models
         public IEnumerable<Quest> GetQuests () => AvailableQuests;
 
         //TODO: Query for traders at location instead of making it part of location
-        private List<Encounter> Encounters { get; } = new List<Encounter>();
+        private List<IdPercentage> Encounters { get; } = new List<IdPercentage>();
 
         //TODO: Query for quests at location instead of making it part of location
         private List<Quest> AvailableQuests { get; } = new List<Quest>();

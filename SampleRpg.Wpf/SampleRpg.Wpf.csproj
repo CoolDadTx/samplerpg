@@ -9,22 +9,17 @@
 
   <ItemGroup>
     <None Remove="Data\items.json" />
+    <None Remove="Data\monsters.json" />
     <None Remove="Data\world.json" />
-    <None Remove="Resources\Images\FarmFields.png" />
-    <None Remove="Resources\Images\Farmhouse.png" />
-    <None Remove="Resources\Images\HerbalistsGarden.png" />
-    <None Remove="Resources\Images\HerbalistsHut.png" />
-    <None Remove="Resources\Images\Home.png" />
-    <None Remove="Resources\Images\Monsters\GiantSpider.png" />
-    <None Remove="Resources\Images\Monsters\Rat.png" />
-    <None Remove="Resources\Images\Monsters\Snake.png" />
-    <None Remove="Resources\Images\SpiderForest.png" />
-    <None Remove="Resources\Images\TownGate.png" />
-    <None Remove="Resources\Images\TownSquare.png" />
-    <None Remove="Resources\Images\Trader.png" />
+    <None Remove="Data\Monsters\GiantSpider.png" />
+    <None Remove="Data\Monsters\Rat.png" />
+    <None Remove="Data\Monsters\Snake.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\monsters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\world.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -59,9 +54,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
-    <Resource Include="Resources\Images\Monsters\GiantSpider.png" />
-    <Resource Include="Resources\Images\Monsters\Rat.png" />
-    <Resource Include="Resources\Images\Monsters\Snake.png" />
+    <Content Include="Data\Monsters\GiantSpider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Monsters\Rat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Monsters\Snake.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

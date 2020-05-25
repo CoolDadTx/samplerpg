@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SampleRpg.Engine.Models
 {
-    public class Encounter
+    public class IdPercentage
     {
-        public int MonsterId { get; set; }
+        public int Id { get; set; }
         public int Percentage { get; set; }
     }
 }
