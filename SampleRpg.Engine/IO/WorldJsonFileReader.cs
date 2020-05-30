@@ -64,7 +64,7 @@ namespace SampleRpg.Engine.IO
 
             public IEnumerable<EncounterModel> Monsters { get; set; } = Enumerable.Empty<EncounterModel>();
             public IEnumerable<QuestModel> Quests { get; set; } = Enumerable.Empty<QuestModel>();
-            public string Trader { get; set; }
+            public int Trader { get; set; }
 
             public Location ToLocation ()
             {
@@ -93,7 +93,7 @@ namespace SampleRpg.Engine.IO
                     };
                 };
 
-                if (!String.IsNullOrEmpty(Trader))
+                if (Trader > 0)
                 {
                     var availableTader = TraderFactory.GetTrader(Trader);
                     if (availableTader != null)

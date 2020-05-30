@@ -1,0 +1,23 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Clear the herb garden",
+    "description": "Defeat the snakes",
+    "reward": {
+      "xp": 25,
+      "gold": 10,
+      "items": [
+        {
+          "id": 1002,
+          "quantity": 1
+        }
+      ]
+    },       
+    "requiredItems": [
+      {
+        "id": 9001,
+        "quantity": 5
+      }
+    ]
+  }
+]

@@ -1,0 +1,26 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Granola Bar",
+    "ingredients": [
+      {
+        "id": 3001,
+        "quantity": 1
+      },
+      {
+        "id": 3002,
+        "quantity": 1
+      },
+      {
+        "id": 3003,
+        "quantity": 1
+      }
+    ],
+    "output": [
+      {
+        "id": 2001,
+        "quantity": 1
+      }
+    ]
+  }
+]

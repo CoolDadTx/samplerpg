@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
+using SampleRpg.Engine.IO;
 using SampleRpg.Engine.Models;
 
 namespace SampleRpg.Engine.Factories
@@ -10,19 +13,25 @@ namespace SampleRpg.Engine.Factories
     {
         static TraderFactory ()
         {
-            var susan = new Trader("Susan");
-            susan.AddToInventory(ItemFactory.NewItem(1001));
-
-            var ted = new Trader("Ted");
-            ted.AddToInventory(ItemFactory.NewItem(1001));
-
-            var pete = new Trader("Pete");
-            pete.AddToInventory(ItemFactory.NewItem(1001));
-
-            s_traders = new List<Trader>() { susan, ted, pete };                
+            s_traders = LoadItems();
         }
 
-        public static Trader GetTrader ( string name ) => s_traders.FirstOrDefault(t => String.Compare(t.Name, name, true) == 0);
+        public static Trader GetTrader ( int id ) => s_traders.FirstOrDefault(t => t.Id == id);
+
+        private static List<Trader> LoadItems ()
+        {
+            if (File.Exists(s_itemFilePath))
+            {
+                var reader = new TraderJsonFileReader(s_itemFilePath);
+
+                return reader.Read().ToList();
+            } else
+                Trace.TraceWarning($"Trader file '{s_itemFilePath}' not found");
+
+            return new List<Trader>();
+        }
+
+        private const string s_itemFilePath = @".\data\traders.json";
 
         private static readonly List<Trader> s_traders;
     }

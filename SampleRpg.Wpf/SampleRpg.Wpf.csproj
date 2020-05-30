@@ -10,6 +10,9 @@
   <ItemGroup>
     <None Remove="Data\items.json" />
     <None Remove="Data\monsters.json" />
+    <None Remove="Data\quests.json" />
+    <None Remove="Data\recipes.json" />
+    <None Remove="Data\traders.json" />
     <None Remove="Data\world.json" />
     <None Remove="Data\Monsters\GiantSpider.png" />
     <None Remove="Data\Monsters\Rat.png" />
@@ -17,6 +20,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\traders.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\recipes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\quests.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\monsters.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

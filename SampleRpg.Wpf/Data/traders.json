@@ -1,0 +1,35 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Susan",
+    "gold":  100,
+    "inventory": [
+      {
+        "id": 1001,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Farmer Ted",
+    "gold":  25,
+    "inventory": [
+      {
+        "id": 1001,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Herbalist Pete",
+    "gold": 25,
+    "inventory": [
+      {
+        "id": 1001,
+        "quantity": 1
+      }
+    ]
+  }
+]

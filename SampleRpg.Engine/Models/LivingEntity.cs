@@ -26,6 +26,8 @@ namespace SampleRpg.Engine.Models
         //TODO: Doesn't make sense to expose this from player...
         public event EventHandler<string> ActionPerformed;
 
+        public int Id { get; protected set; }
+
         public string Name
         {
             get => _name ?? "";

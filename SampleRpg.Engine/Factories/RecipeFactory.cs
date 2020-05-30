@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
+using SampleRpg.Engine.IO;
 using SampleRpg.Engine.Models;
 
 namespace SampleRpg.Engine.Factories
@@ -19,6 +22,21 @@ namespace SampleRpg.Engine.Factories
         }
 
         public static Recipe GetRecipe ( int id ) => s_recipes.FirstOrDefault(r => r.Id == id);
+
+        private static List<Recipe> LoadItems ()
+        {
+            if (File.Exists(s_itemFilePath))
+            {
+                var reader = new RecipeJsonFileReader(s_itemFilePath);
+
+                return reader.Read().ToList();
+            } else
+                Trace.TraceWarning($"Recipe file '{s_itemFilePath}' not found");
+
+            return new List<Recipe>();
+        }
+
+        private const string s_itemFilePath = @".\data\recipes.json";
 
         private static readonly List<Recipe> s_recipes = new List<Recipe>();
     }

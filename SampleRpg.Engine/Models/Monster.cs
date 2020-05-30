@@ -20,8 +20,6 @@ namespace SampleRpg.Engine.Models
             ImagePath = (imageName ?? name).RemoveAll(' ').ToLower();
         }
 
-        public int Id { get; }
-
         public string ImagePath { get; set; }
 
         public int RewardXP { get; private set; }
